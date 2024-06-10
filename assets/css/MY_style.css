@@ -1,0 +1,42 @@
+.container-scroller {
+    height: 100vh;
+}
+
+.main-panel {
+    overflow: auto;
+    height: 90vh;
+}
+
+@media screen and (min-width: 992px) {
+    .sidebar {
+        height: 100vh;
+        overflow: auto;
+        position: sticky;
+    }
+}
+
+.sidebar .nav.sub-menu .nav-item:before {
+    content: unset !important;
+}
+
+.sidebar .nav.sub-menu .nav-item .nav-link {
+    padding-left: 0;
+}
+
+.modal .modal-dialog {
+    margin-top: 1.75rem; /* default from bootstrap modal */
+}
+
+.ellipsis {
+    max-width: 150px; /* Set your desired max-width */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Fix invisible dark badge when combined with dark outline button */
+.btn-outline-dark:hover .badge-outline-dark,
+.btn-outline-dark:active .badge-outline-dark {
+    color: white;
+    border-color: white;
+}
