@@ -51,8 +51,8 @@
       </a>
     </li>
     
-    <li class="nav-item <?php if ($current_page==='nilai') echo 'active' ?>">
-      <a class="nav-link" href="nilai.php?go=nilai">
+    <li class="nav-item <?php if ($current_page==='penilaian_alternatif') echo 'active' ?>">
+      <a class="nav-link" href="penilaian_alternatif.php?go=penilaian_alternatif">
         <i class="ti-write menu-icon"></i>
         <span class="menu-title">Nilai</span>
       </a>
