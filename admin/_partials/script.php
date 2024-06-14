@@ -33,4 +33,12 @@
         hide: 100
       }
     })
+    
+    function initAllSwitcheryJs() {
+      var elems = document.querySelectorAll('.js-switch');
+      
+      for (var i = 0; i < elems.length; i++) {
+        var switchery = new Switchery(elems[i]);
+      }
+    }
 </script>
