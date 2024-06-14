@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2024 at 09:47 PM
+-- Generation Time: Jun 14, 2024 at 10:53 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -40,8 +40,10 @@ CREATE TABLE `tbl_alternatif` (
 --
 
 INSERT INTO `tbl_alternatif` (`id`, `id_siswa`, `kode_alternatif`, `created_at`, `updated_at`) VALUES
-(2, 2, 'A2', '2024-06-10 18:47:43', '2024-06-10 18:51:04'),
-(3, 1, 'A1', '2024-06-10 18:51:17', NULL);
+(3, 1, 'A1', '2024-06-10 18:51:17', NULL),
+(5, 3, 'A2', '2024-06-12 13:57:15', NULL),
+(6, 4, 'A4', '2024-06-12 13:58:28', NULL),
+(8, 5, 'A3', '2024-06-13 20:45:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -219,10 +221,10 @@ CREATE TABLE `tbl_kriteria` (
 --
 
 INSERT INTO `tbl_kriteria` (`id`, `id_tingkat_kepentingan`, `kode_kriteria`, `nama_kriteria`, `status_aktif`, `created_at`, `updated_at`) VALUES
-(1, 1, 'K1', 'Kehadiran', '1', '2024-06-09 09:41:36', '2024-06-10 19:26:17'),
-(2, 2, 'K2', 'Harian', '1', '2024-06-09 09:41:36', '2024-06-10 19:26:20'),
+(1, 1, 'K1', 'Kehadiran', '1', '2024-06-09 09:41:36', '2024-06-12 11:03:03'),
+(2, 2, 'K2', 'Harian', '1', '2024-06-09 09:41:36', '2024-06-12 11:08:32'),
 (3, 3, 'K3', 'Tugas', '1', '2024-06-09 09:41:36', '2024-06-10 19:26:26'),
-(4, 4, 'K4', 'UAS', '1', '2024-06-09 09:41:36', '2024-06-10 19:26:34');
+(4, 4, 'K4', 'UAS', '1', '2024-06-09 09:41:36', '2024-06-13 15:12:00');
 
 -- --------------------------------------------------------
 
@@ -324,7 +326,9 @@ INSERT INTO `tbl_pengguna` (`id`, `id_guru`, `id_siswa`, `username`, `password`,
 (14, 8, NULL, '9999999999888777', '$2y$10$V18sgx5Mq5OrMOTiDgDLIe5onbpmJAj4pgoweH7pECFYFu1C5wtEG', 'guru', '2024-06-10 18:02:34', NULL),
 (15, NULL, 1, '9991814922', '$2y$10$ClQuypSr8X61xoizKS30j.j0tNcNWzoxTUWBoK.CON4/qVmOivb/.', 'siswa', '2024-06-10 18:47:43', NULL),
 (16, 9, NULL, '1979762520140320', '$2y$10$YhnTQHIAlfmjcGfv5699HucG0MJbxCcVlxe4TiiG.bTRJx/cUv2HK', 'guru', '2024-06-10 19:01:29', NULL),
-(17, 10, NULL, '1989986520190220', '$2y$10$d5eWa4HmvK94JsHmzRSaauCx2fcq9DWpXATeb0DCm5cBGRsU1d2IO', 'guru', '2024-06-10 19:02:12', NULL);
+(17, 10, NULL, '1989986520190220', '$2y$10$d5eWa4HmvK94JsHmzRSaauCx2fcq9DWpXATeb0DCm5cBGRsU1d2IO', 'guru', '2024-06-10 19:02:12', NULL),
+(18, NULL, 4, '9997672534', '$2y$10$oHJak4.D3fPmZTsZ0i86q.VpKi5PmiWq9saU7ZFLtW/YIJtbq1JNK', 'siswa', '2024-06-12 13:58:28', NULL),
+(19, NULL, 5, '9987652345', '$2y$10$UMklf7moNVGQZ5E2k.tatuzY9EVSk3LOm7X/eAcJMlY6dHlwcIE16', 'siswa', '2024-06-12 14:04:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -336,10 +340,33 @@ CREATE TABLE `tbl_penilaian_alternatif` (
   `id` int(10) UNSIGNED NOT NULL,
   `id_alternatif` int(10) UNSIGNED DEFAULT NULL,
   `id_kriteria` int(10) UNSIGNED DEFAULT NULL,
+  `id_sub_kriteria` int(10) UNSIGNED DEFAULT NULL,
   `id_tahun_akademik` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_penilaian_alternatif`
+--
+
+INSERT INTO `tbl_penilaian_alternatif` (`id`, `id_alternatif`, `id_kriteria`, `id_sub_kriteria`, `id_tahun_akademik`, `created_at`, `updated_at`) VALUES
+(1, 6, 1, 4, 3, '2024-06-13 20:59:44', NULL),
+(2, 6, 2, 9, 3, '2024-06-13 20:59:44', NULL),
+(3, 6, 3, 13, 3, '2024-06-13 20:59:44', NULL),
+(4, 6, 4, 18, 3, '2024-06-13 20:59:44', NULL),
+(9, 5, 1, 5, 3, '2024-06-13 21:01:45', NULL),
+(10, 5, 2, 9, 3, '2024-06-13 21:01:45', NULL),
+(11, 5, 3, 14, 3, '2024-06-13 21:01:45', NULL),
+(12, 5, 4, 18, 3, '2024-06-13 21:01:45', NULL),
+(13, 3, 1, 3, 3, '2024-06-13 21:02:09', NULL),
+(14, 3, 2, 9, 3, '2024-06-13 21:02:09', NULL),
+(15, 3, 3, 15, 3, '2024-06-13 21:02:09', NULL),
+(16, 3, 4, 19, 3, '2024-06-13 21:02:09', NULL),
+(29, 8, 1, 4, 3, '2024-06-14 20:06:19', NULL),
+(30, 8, 2, 8, 3, '2024-06-14 20:06:19', NULL),
+(31, 8, 3, 15, 3, '2024-06-14 20:06:19', NULL),
+(32, 8, 4, 19, 3, '2024-06-14 20:06:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -367,8 +394,10 @@ CREATE TABLE `tbl_siswa` (
 --
 
 INSERT INTO `tbl_siswa` (`id`, `id_kelas`, `nisn`, `nama_siswa`, `jk`, `alamat`, `tmp_lahir`, `tgl_lahir`, `no_telp`, `email`, `created_at`, `updated_at`) VALUES
-(1, 11, '9991814928', 'Okta Alfiansyah', 'l', 'Kertapati', 'Palembang', '1999-10-10', '87799055070', 'oktaalfiansyah@gmail.com', '2024-06-10 16:24:05', NULL),
-(2, 12, '9991814922', 'Bima Satria', 'l', 'Gg. Duren', 'Palembang', '2024-05-27', '87700111100', 'bimasatria@gmail.com', '2024-06-10 18:47:43', NULL);
+(1, 11, '9991814928', 'Okta Alfiansyah', 'l', 'Kertapati', 'Palembang', '1999-10-10', '087799055070', 'oktaalfiansyah@gmail.com', '2024-06-12 13:51:29', '2024-06-12 13:51:29'),
+(3, 11, '9991814872', 'Bima Satria', 'l', 'Gang Duren', 'Palembang', '2024-05-08', '087765432345', 'bimasatria@gmail.com', '2024-06-12 12:52:49', '2024-06-12 12:52:49'),
+(4, 11, '9997672534', 'Arief Rahman', 'l', 'Jakabaring', 'Palembang', '2024-05-27', '087700111100', 'ariefrahman@gmail.com', '2024-06-12 13:58:28', NULL),
+(5, 11, '9987652345', 'Benny Setiawan', 'l', 'Palembang', 'Palembang', '1998-05-01', '081992001969', 'bennysetiawan@gmail.com', '2024-06-12 14:04:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -391,22 +420,26 @@ CREATE TABLE `tbl_sub_kriteria` (
 --
 
 INSERT INTO `tbl_sub_kriteria` (`id`, `id_kriteria`, `kode_sub_kriteria`, `nama_sub_kriteria`, `bobot`, `created_at`, `updated_at`) VALUES
-(1, 1, 'K1S1', 'Kehadiran 1', '1.00', '2024-06-10 19:45:24', NULL),
-(2, 1, 'K1S2', 'Kehadiran 2', '2.00', '2024-06-10 19:45:24', NULL),
-(3, 1, 'K1S3', 'Kehadiran 3', '3.00', '2024-06-10 19:45:24', NULL),
-(4, 1, 'K1S4', 'Kehadiran 4', '4.00', '2024-06-10 19:45:24', NULL),
-(5, 2, 'K2S1', 'Harian 1', '1.00', '2024-06-10 19:45:24', NULL),
-(6, 2, 'K2S2', 'Harian 2', '2.00', '2024-06-10 19:45:24', NULL),
-(7, 2, 'K2S3', 'Harian 3', '3.00', '2024-06-10 19:45:24', NULL),
-(8, 2, 'K2S4', 'Harian 4', '4.00', '2024-06-10 19:45:24', NULL),
-(9, 3, 'K3S1', 'Tugas 1', '1.00', '2024-06-10 19:45:24', NULL),
-(10, 3, 'K3S2', 'Tugas 2', '2.00', '2024-06-10 19:45:24', NULL),
-(11, 3, 'K3S3', 'Tugas 3', '3.00', '2024-06-10 19:45:24', NULL),
-(12, 3, 'K3S4', 'Tugas 4', '4.00', '2024-06-10 19:45:24', NULL),
-(13, 4, 'K4S1', 'UAS 1', '1.00', '2024-06-10 19:45:24', NULL),
-(14, 4, 'K4S2', 'UAS 2', '2.00', '2024-06-10 19:45:24', NULL),
-(15, 4, 'K4S3', 'UAS 3', '3.00', '2024-06-10 19:45:24', NULL),
-(16, 4, 'K4S4', 'UAS 4', '4.00', '2024-06-10 19:45:24', NULL);
+(1, 1, 'K1S1', '1', '1.00', '2024-06-13 18:26:01', NULL),
+(2, 1, 'K1S2', '2', '2.00', '2024-06-13 18:26:01', NULL),
+(3, 1, 'K1S3', '3', '3.00', '2024-06-13 18:26:01', NULL),
+(4, 1, 'K1S4', '4', '4.00', '2024-06-13 18:26:01', NULL),
+(5, 1, 'K1S5', '5', '5.00', '2024-06-13 18:26:01', NULL),
+(6, 2, 'K2S1', '1', '1.00', '2024-06-13 18:26:01', NULL),
+(7, 2, 'K2S2', '2', '2.00', '2024-06-13 18:26:01', NULL),
+(8, 2, 'K2S3', '3', '3.00', '2024-06-13 18:26:01', NULL),
+(9, 2, 'K2S4', '4', '4.00', '2024-06-13 18:26:01', NULL),
+(10, 2, 'K2S5', '5', '5.00', '2024-06-13 18:26:01', NULL),
+(11, 3, 'K3S1', '1', '1.00', '2024-06-13 18:26:01', NULL),
+(12, 3, 'K3S2', '2', '2.00', '2024-06-13 18:26:01', NULL),
+(13, 3, 'K3S3', '3', '3.00', '2024-06-13 18:26:01', NULL),
+(14, 3, 'K3S4', '4', '4.00', '2024-06-13 18:26:01', NULL),
+(15, 3, 'K3S5', '5', '5.00', '2024-06-13 18:26:01', NULL),
+(16, 4, 'K4S1', '1', '1.00', '2024-06-13 18:26:01', NULL),
+(17, 4, 'K4S2', '2', '2.00', '2024-06-13 18:26:01', NULL),
+(18, 4, 'K4S3', '3', '3.00', '2024-06-13 18:26:01', NULL),
+(19, 4, 'K4S4', '4', '4.00', '2024-06-13 18:26:01', NULL),
+(20, 4, 'K4S5', '5', '5.00', '2024-06-13 18:26:01', '2024-06-13 18:26:27');
 
 -- --------------------------------------------------------
 
@@ -416,7 +449,8 @@ INSERT INTO `tbl_sub_kriteria` (`id`, `id_kriteria`, `kode_sub_kriteria`, `nama_
 
 CREATE TABLE `tbl_tahun_akademik` (
   `id` int(10) UNSIGNED NOT NULL,
-  `tahun_akademik` varchar(10) NOT NULL,
+  `dari_tahun` year(4) NOT NULL,
+  `sampai_tahun` year(4) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -425,11 +459,11 @@ CREATE TABLE `tbl_tahun_akademik` (
 -- Dumping data for table `tbl_tahun_akademik`
 --
 
-INSERT INTO `tbl_tahun_akademik` (`id`, `tahun_akademik`, `created_at`, `updated_at`) VALUES
-(1, '2021/2022', '2024-05-28 05:11:49', '2024-05-28 05:19:26'),
-(2, '2022/2023', '2024-05-28 04:52:33', '2024-05-28 05:19:23'),
-(3, '2023/2024', '2024-05-28 04:54:00', '2024-05-28 05:19:29'),
-(5, '2020/2021', '2024-05-28 19:50:48', NULL);
+INSERT INTO `tbl_tahun_akademik` (`id`, `dari_tahun`, `sampai_tahun`, `created_at`, `updated_at`) VALUES
+(1, 2021, 2022, '2024-05-28 05:11:49', '2024-06-13 15:21:31'),
+(2, 2022, 2023, '2024-05-28 04:52:33', '2024-06-13 15:21:28'),
+(3, 2023, 2024, '2024-05-28 04:54:00', '2024-06-13 15:21:23'),
+(5, 2020, 2021, '2024-05-28 19:50:48', '2024-06-13 15:21:14');
 
 -- --------------------------------------------------------
 
@@ -465,6 +499,7 @@ INSERT INTO `tbl_tingkat_kepentingan` (`id`, `nilai_kepentingan`, `keterangan`, 
 --
 ALTER TABLE `tbl_alternatif`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kode_alternatif` (`kode_alternatif`),
   ADD KEY `id_siswa` (`id_siswa`);
 
 --
@@ -503,6 +538,7 @@ ALTER TABLE `tbl_kelas`
 --
 ALTER TABLE `tbl_kriteria`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kode_kriteria` (`kode_kriteria`),
   ADD KEY `id_tingkat_kepentingan` (`id_tingkat_kepentingan`);
 
 --
@@ -533,7 +569,8 @@ ALTER TABLE `tbl_penilaian_alternatif`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_alternatif` (`id_alternatif`),
   ADD KEY `id_kriteria` (`id_kriteria`),
-  ADD KEY `id_tahun_akademik` (`id_tahun_akademik`);
+  ADD KEY `id_tahun_akademik` (`id_tahun_akademik`),
+  ADD KEY `id_sub_kriteria` (`id_sub_kriteria`);
 
 --
 -- Indexes for table `tbl_siswa`
@@ -547,6 +584,7 @@ ALTER TABLE `tbl_siswa`
 --
 ALTER TABLE `tbl_sub_kriteria`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kode_sub_kriteria` (`kode_sub_kriteria`),
   ADD KEY `id_kriteria` (`id_kriteria`);
 
 --
@@ -569,7 +607,7 @@ ALTER TABLE `tbl_tingkat_kepentingan`
 -- AUTO_INCREMENT for table `tbl_alternatif`
 --
 ALTER TABLE `tbl_alternatif`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_guru`
@@ -599,7 +637,7 @@ ALTER TABLE `tbl_kelas`
 -- AUTO_INCREMENT for table `tbl_kriteria`
 --
 ALTER TABLE `tbl_kriteria`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_pangkat_golongan`
@@ -617,31 +655,31 @@ ALTER TABLE `tbl_pendidikan`
 -- AUTO_INCREMENT for table `tbl_pengguna`
 --
 ALTER TABLE `tbl_pengguna`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tbl_penilaian_alternatif`
 --
 ALTER TABLE `tbl_penilaian_alternatif`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `tbl_siswa`
 --
 ALTER TABLE `tbl_siswa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_sub_kriteria`
 --
 ALTER TABLE `tbl_sub_kriteria`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tbl_tahun_akademik`
 --
 ALTER TABLE `tbl_tahun_akademik`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_tingkat_kepentingan`
@@ -699,7 +737,8 @@ ALTER TABLE `tbl_pengguna`
 ALTER TABLE `tbl_penilaian_alternatif`
   ADD CONSTRAINT `tbl_penilaian_alternatif_ibfk_1` FOREIGN KEY (`id_alternatif`) REFERENCES `tbl_alternatif` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tbl_penilaian_alternatif_ibfk_2` FOREIGN KEY (`id_kriteria`) REFERENCES `tbl_kriteria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbl_penilaian_alternatif_ibfk_3` FOREIGN KEY (`id_tahun_akademik`) REFERENCES `tbl_tahun_akademik` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbl_penilaian_alternatif_ibfk_3` FOREIGN KEY (`id_sub_kriteria`) REFERENCES `tbl_sub_kriteria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_penilaian_alternatif_ibfk_4` FOREIGN KEY (`id_tahun_akademik`) REFERENCES `tbl_tahun_akademik` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_siswa`
