@@ -41,4 +41,40 @@
         var switchery = new Switchery(elems[i]);
       }
     }
+    
+    function getURLParameterVal(urlParam) {
+      // Get the full URL of the current page
+      const url = new URL(window.location.href);
+    
+      // Get the URLSearchParams object
+      const params = new URLSearchParams(url.search);
+    
+      // Get the value of the 'go' parameter
+      const goParam = params.get(urlParam);
+      
+      return goParam;
+    }
+    
+    function removeDuplicateHighlightedSidebarList(pageName) {
+      // Select all .nav-item elements inside .sidebar that have a .nav-link child with href not equal to "kriteria.php?go=kriteria"
+      var elements = document.querySelectorAll('.sidebar .nav:not(.sub-menu) > .nav-item');
+    
+      // Loop through each selected element
+      elements.forEach(function(element) {
+          // Find the child .nav-link element
+          var link = element.querySelector('.nav-link');
+          var href = `${pageName}.php?go=${pageName}`;
+    
+          // Check if the href does not match "kriteria.php?go=kriteria"
+          if (link && link.getAttribute('href') !== href) {
+            // Remove the 'active' class from the parent .nav-item element
+            element.classList.remove('active');
+          }
+      });
+    }
+    
+    $(document).ready(function() {
+      currentGo = getURLParameterVal('go');
+      removeDuplicateHighlightedSidebarList(currentGo);
+    });
 </script>
