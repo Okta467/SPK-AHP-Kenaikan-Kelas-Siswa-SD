@@ -221,11 +221,11 @@ else:
                                 <!-- Toggle Modal Penilaian -->
                                 <?php if ($alternatif['id_penilaian_alternatif']): ?>
 
-                                  <button type="button" class="btn btn-sm btn-outline-secondary btn-icon-text py-1 toggle_tooltip disabled" title="Sudah Dinilai"><i class="ti-write -alt mr-0"></i></button>
+                                  <button type="button" class="btn btn-sm btn-outline-secondary btn-icon-text py-1 disabled" data-toggle="tooltip" data-placement="top" title="Sudah Dinilai"><i class="ti-write -alt mr-0"></i></button>
                                   
                                 <?php else: ?>
 
-                                  <button type="button" class="btn btn-sm btn-inverse-info btn-icon-text py-1 toggle_tooltip toggle_modal_penilaian" title="Nilai"
+                                  <button type="button" class="btn btn-sm btn-inverse-info btn-icon-text py-1 toggle_modal_penilaian" data-toggle="tooltip" data-placement="top" title="Nilai"
                                     data-id_alternatif="<?= $alternatif['id_alternatif'] ?>"
                                     data-kode_alternatif="<?= $alternatif['kode_alternatif'] ?>"
                                     data-nama_siswa="<?= $alternatif['nama_siswa'] ?>"
@@ -239,11 +239,11 @@ else:
                                 <!-- Toggle Modal Ubah Penilaian -->
                                 <?php if (!$alternatif['id_penilaian_alternatif']): ?>
 
-                                  <button type="button" class="btn btn-sm btn-outline-secondary btn-icon-text py-1 toggle_tooltip disabled" title="Ubah Penilaian"><i class="ti-pencil-alt -alt mr-0"></i></button>
+                                  <button type="button" class="btn btn-sm btn-outline-secondary btn-icon-text py-1 disabled" data-toggle="tooltip" data-placement="top" title="Ubah Penilaian"><i class="ti-pencil-alt -alt mr-0"></i></button>
 
                                 <?php else: ?>
 
-                                  <button type="button" class="btn btn-sm btn-inverse-dark btn-icon-text py-1 toggle_tooltip toggle_modal_ubah" title="Ubah Penilaian"
+                                  <button type="button" class="btn btn-sm btn-inverse-dark btn-icon-text py-1 toggle_modal_ubah" data-toggle="tooltip" data-placement="top" title="Ubah Penilaian"
                                     data-id_alternatif="<?= $alternatif['id_alternatif'] ?>"
                                     data-id_tahun_akademik="<?= $alternatif['id_tahun_akademik'] ?>">
                                     <i class="ti-pencil-alt mr-0"></i>
@@ -254,11 +254,11 @@ else:
 
                                 <!-- Toggle Modal Reset Penilaian -->
                                 <?php if (!$alternatif['id_penilaian_alternatif']): ?>
-                                  <button type="button" class="btn btn-sm btn-outline-secondary btn-icon-text py-1 toggle_tooltip disabled" title="Reset Penilaian"><i class="ti-trash -alt mr-0"></i></button>
+                                  <button type="button" class="btn btn-sm btn-outline-secondary btn-icon-text py-1 disabled" data-toggle="tooltip" data-placement="top" title="Reset Penilaian"><i class="ti-trash -alt mr-0"></i></button>
 
                                 <?php else: ?>
                                   
-                                  <button type="button" class="btn btn-sm btn-inverse-danger btn-icon-text py-1 toggle_tooltip toggle_modal_hapus" title="Reset Penilaian"
+                                  <button type="button" class="btn btn-sm btn-inverse-danger btn-icon-text py-1 toggle_modal_hapus" data-toggle="tooltip" data-placement="top" title="Reset Penilaian"
                                     data-id_alternatif="<?= $alternatif['id_alternatif'] ?>"
                                     data-id_kelas="<?= $id_kelas_filter ?>"
                                     data-id_tahun_akademik="<?= $id_tahun_akademik_filter ?>"
