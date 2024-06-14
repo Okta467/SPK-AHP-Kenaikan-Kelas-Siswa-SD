@@ -4,6 +4,7 @@
 <script src="<?= base_url('vendors/select2/select2.min.js') ?>"></script>
 <script src="<?= base_url('vendors/moment/moment.min.js') ?>"></script>
 <script src="<?= base_url('vendors/MY_vendors/dropify/js/dropify.min.js') ?>"></script>
+<script src="<?= base_url("vendors/MY_Vendors/switchery/dist/switchery.min.js") ?>"></script>
 <!-- endinject -->
 
 <!-- Plugin js for this page -->

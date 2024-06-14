@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="<?= base_url('vendors/mdi/css/materialdesignicons.min.css') ?>">
 <link rel="stylesheet" href="<?= base_url('vendors/select2/select2.min.css') ?>">
 <link rel="stylesheet" href="<?= base_url('vendors/MY_vendors/dropify/css/dropify.min.css') ?>">
+<link rel="stylesheet" href="<?= base_url('vendors/MY_vendors/switchery/dist/switchery.min.css') ?>">
 <!-- endinject -->
 
 <!-- Plugin css for this page -->
