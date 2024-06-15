@@ -44,10 +44,10 @@
       </a>
     </li>
     
-    <li class="nav-item <?php if ($current_page==='jabatan') echo 'active' ?>">
-      <a class="nav-link" href="jabatan.php?go=jabatan">
-        <i class="icon-file menu-icon"></i>
-        <span class="menu-title">Jabatan</span>
+    <li class="nav-item <?php if ($current_page==='range_nilai') echo 'active' ?>">
+      <a class="nav-link" href="range_nilai.php?go=range_nilai">
+        <i class="ti-dashboard menu-icon"></i>
+        <span class="menu-title">Range Nilai</span>
       </a>
     </li>
     
