@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2024 at 10:53 PM
+-- Generation Time: Jun 15, 2024 at 10:23 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -222,9 +222,10 @@ CREATE TABLE `tbl_kriteria` (
 
 INSERT INTO `tbl_kriteria` (`id`, `id_tingkat_kepentingan`, `kode_kriteria`, `nama_kriteria`, `status_aktif`, `created_at`, `updated_at`) VALUES
 (1, 1, 'K1', 'Kehadiran', '1', '2024-06-09 09:41:36', '2024-06-12 11:03:03'),
-(2, 2, 'K2', 'Harian', '1', '2024-06-09 09:41:36', '2024-06-12 11:08:32'),
-(3, 3, 'K3', 'Tugas', '1', '2024-06-09 09:41:36', '2024-06-10 19:26:26'),
-(4, 4, 'K4', 'UAS', '1', '2024-06-09 09:41:36', '2024-06-13 15:12:00');
+(2, 2, 'K2', 'Tugas', '1', '2024-06-09 09:41:36', '2024-06-15 17:25:22'),
+(3, 3, 'K3', 'MID', '1', '2024-06-09 09:41:36', '2024-06-15 17:25:29'),
+(4, 4, 'K4', 'UAS', '1', '2024-06-09 09:41:36', '2024-06-13 15:12:00'),
+(5, 1, 'K5', 'Perilaku', '1', '2024-06-15 17:25:43', '2024-06-15 17:29:02');
 
 -- --------------------------------------------------------
 
@@ -342,6 +343,7 @@ CREATE TABLE `tbl_penilaian_alternatif` (
   `id_kriteria` int(10) UNSIGNED DEFAULT NULL,
   `id_sub_kriteria` int(10) UNSIGNED DEFAULT NULL,
   `id_tahun_akademik` int(10) UNSIGNED DEFAULT NULL,
+  `nilai_siswa` decimal(4,2) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -350,23 +352,53 @@ CREATE TABLE `tbl_penilaian_alternatif` (
 -- Dumping data for table `tbl_penilaian_alternatif`
 --
 
-INSERT INTO `tbl_penilaian_alternatif` (`id`, `id_alternatif`, `id_kriteria`, `id_sub_kriteria`, `id_tahun_akademik`, `created_at`, `updated_at`) VALUES
-(1, 6, 1, 4, 3, '2024-06-13 20:59:44', NULL),
-(2, 6, 2, 9, 3, '2024-06-13 20:59:44', NULL),
-(3, 6, 3, 13, 3, '2024-06-13 20:59:44', NULL),
-(4, 6, 4, 18, 3, '2024-06-13 20:59:44', NULL),
-(9, 5, 1, 5, 3, '2024-06-13 21:01:45', NULL),
-(10, 5, 2, 9, 3, '2024-06-13 21:01:45', NULL),
-(11, 5, 3, 14, 3, '2024-06-13 21:01:45', NULL),
-(12, 5, 4, 18, 3, '2024-06-13 21:01:45', NULL),
-(13, 3, 1, 3, 3, '2024-06-13 21:02:09', NULL),
-(14, 3, 2, 9, 3, '2024-06-13 21:02:09', NULL),
-(15, 3, 3, 15, 3, '2024-06-13 21:02:09', NULL),
-(16, 3, 4, 19, 3, '2024-06-13 21:02:09', NULL),
-(29, 8, 1, 4, 3, '2024-06-14 20:06:19', NULL),
-(30, 8, 2, 8, 3, '2024-06-14 20:06:19', NULL),
-(31, 8, 3, 15, 3, '2024-06-14 20:06:19', NULL),
-(32, 8, 4, 19, 3, '2024-06-14 20:06:19', NULL);
+INSERT INTO `tbl_penilaian_alternatif` (`id`, `id_alternatif`, `id_kriteria`, `id_sub_kriteria`, `id_tahun_akademik`, `nilai_siswa`, `created_at`, `updated_at`) VALUES
+(31, 8, 1, 4, 3, '80.00', '2024-06-15 19:54:29', NULL),
+(32, 8, 2, 3, 3, '75.00', '2024-06-15 19:54:29', NULL),
+(33, 8, 3, 4, 3, '90.00', '2024-06-15 19:54:29', NULL),
+(34, 8, 4, 4, 3, '85.00', '2024-06-15 19:54:29', NULL),
+(35, 8, 5, 4, 3, '88.00', '2024-06-15 19:54:29', NULL),
+(36, 6, 1, 4, 3, '80.00', '2024-06-15 20:20:26', NULL),
+(37, 6, 2, 4, 3, '80.00', '2024-06-15 20:20:26', NULL),
+(38, 6, 3, 3, 3, '77.00', '2024-06-15 20:20:26', NULL),
+(39, 6, 4, 3, 3, '78.00', '2024-06-15 20:20:26', NULL),
+(40, 6, 5, 3, 3, '77.00', '2024-06-15 20:20:26', NULL),
+(41, 5, 1, 4, 3, '90.00', '2024-06-15 20:21:07', NULL),
+(42, 5, 2, 4, 3, '80.00', '2024-06-15 20:21:07', NULL),
+(43, 5, 3, 4, 3, '85.00', '2024-06-15 20:21:07', NULL),
+(44, 5, 4, 3, 3, '75.00', '2024-06-15 20:21:07', NULL),
+(45, 5, 5, 4, 3, '88.00', '2024-06-15 20:21:07', NULL),
+(46, 3, 1, 3, 3, '75.00', '2024-06-15 20:21:37', NULL),
+(47, 3, 2, 4, 3, '85.00', '2024-06-15 20:21:37', NULL),
+(48, 3, 3, 5, 3, '96.00', '2024-06-15 20:21:37', NULL),
+(49, 3, 4, 4, 3, '87.00', '2024-06-15 20:21:37', NULL),
+(50, 3, 5, 4, 3, '90.00', '2024-06-15 20:21:37', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_range_nilai`
+--
+
+CREATE TABLE `tbl_range_nilai` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `batas_bawah` decimal(5,2) NOT NULL,
+  `batas_atas` decimal(5,2) NOT NULL,
+  `range_nilai` decimal(4,2) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_range_nilai`
+--
+
+INSERT INTO `tbl_range_nilai` (`id`, `batas_bawah`, `batas_atas`, `range_nilai`, `created_at`, `updated_at`) VALUES
+(1, '0.00', '30.00', '1.00', '2024-06-15 11:04:39', '2024-06-15 17:11:59'),
+(2, '31.00', '59.00', '2.00', '2024-06-15 11:04:39', '2024-06-15 17:12:02'),
+(3, '60.00', '79.00', '3.00', '2024-06-15 11:04:39', '2024-06-15 17:12:04'),
+(4, '80.00', '90.00', '4.00', '2024-06-15 11:04:39', '2024-06-15 17:12:05'),
+(5, '91.00', '100.00', '5.00', '2024-06-15 11:04:39', '2024-06-15 17:12:06');
 
 -- --------------------------------------------------------
 
@@ -408,9 +440,9 @@ INSERT INTO `tbl_siswa` (`id`, `id_kelas`, `nisn`, `nama_siswa`, `jk`, `alamat`,
 CREATE TABLE `tbl_sub_kriteria` (
   `id` int(10) UNSIGNED NOT NULL,
   `id_kriteria` int(10) UNSIGNED DEFAULT NULL,
+  `id_range_nilai` int(10) UNSIGNED DEFAULT NULL,
   `kode_sub_kriteria` varchar(16) NOT NULL,
   `nama_sub_kriteria` varchar(64) NOT NULL,
-  `bobot` decimal(10,2) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -419,27 +451,32 @@ CREATE TABLE `tbl_sub_kriteria` (
 -- Dumping data for table `tbl_sub_kriteria`
 --
 
-INSERT INTO `tbl_sub_kriteria` (`id`, `id_kriteria`, `kode_sub_kriteria`, `nama_sub_kriteria`, `bobot`, `created_at`, `updated_at`) VALUES
-(1, 1, 'K1S1', '1', '1.00', '2024-06-13 18:26:01', NULL),
-(2, 1, 'K1S2', '2', '2.00', '2024-06-13 18:26:01', NULL),
-(3, 1, 'K1S3', '3', '3.00', '2024-06-13 18:26:01', NULL),
-(4, 1, 'K1S4', '4', '4.00', '2024-06-13 18:26:01', NULL),
-(5, 1, 'K1S5', '5', '5.00', '2024-06-13 18:26:01', NULL),
-(6, 2, 'K2S1', '1', '1.00', '2024-06-13 18:26:01', NULL),
-(7, 2, 'K2S2', '2', '2.00', '2024-06-13 18:26:01', NULL),
-(8, 2, 'K2S3', '3', '3.00', '2024-06-13 18:26:01', NULL),
-(9, 2, 'K2S4', '4', '4.00', '2024-06-13 18:26:01', NULL),
-(10, 2, 'K2S5', '5', '5.00', '2024-06-13 18:26:01', NULL),
-(11, 3, 'K3S1', '1', '1.00', '2024-06-13 18:26:01', NULL),
-(12, 3, 'K3S2', '2', '2.00', '2024-06-13 18:26:01', NULL),
-(13, 3, 'K3S3', '3', '3.00', '2024-06-13 18:26:01', NULL),
-(14, 3, 'K3S4', '4', '4.00', '2024-06-13 18:26:01', NULL),
-(15, 3, 'K3S5', '5', '5.00', '2024-06-13 18:26:01', NULL),
-(16, 4, 'K4S1', '1', '1.00', '2024-06-13 18:26:01', NULL),
-(17, 4, 'K4S2', '2', '2.00', '2024-06-13 18:26:01', NULL),
-(18, 4, 'K4S3', '3', '3.00', '2024-06-13 18:26:01', NULL),
-(19, 4, 'K4S4', '4', '4.00', '2024-06-13 18:26:01', NULL),
-(20, 4, 'K4S5', '5', '5.00', '2024-06-13 18:26:01', '2024-06-13 18:26:27');
+INSERT INTO `tbl_sub_kriteria` (`id`, `id_kriteria`, `id_range_nilai`, `kode_sub_kriteria`, `nama_sub_kriteria`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'K1S1', '1', '2024-06-13 18:26:01', '2024-06-15 17:05:23'),
+(2, 1, 2, 'K1S2', '2', '2024-06-13 18:26:01', '2024-06-15 17:05:49'),
+(3, 1, 3, 'K1S3', '3', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(4, 1, 4, 'K1S4', '4', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(5, 1, 5, 'K1S5', '5', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(6, 2, 1, 'K2S1', '1', '2024-06-13 18:26:01', '2024-06-15 17:05:23'),
+(7, 2, 2, 'K2S2', '2', '2024-06-13 18:26:01', '2024-06-15 17:05:49'),
+(8, 2, 3, 'K2S3', '3', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(9, 2, 4, 'K2S4', '4', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(10, 2, 5, 'K2S5', '5', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(11, 3, 1, 'K3S1', '1', '2024-06-13 18:26:01', '2024-06-15 17:05:23'),
+(12, 3, 2, 'K3S2', '2', '2024-06-13 18:26:01', '2024-06-15 17:05:49'),
+(13, 3, 3, 'K3S3', '3', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(14, 3, 4, 'K3S4', '4', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(15, 3, 5, 'K3S5', '5', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(16, 4, 1, 'K4S1', '1', '2024-06-13 18:26:01', '2024-06-15 17:05:23'),
+(17, 4, 2, 'K4S2', '2', '2024-06-13 18:26:01', '2024-06-15 17:05:49'),
+(18, 4, 3, 'K4S3', '3', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(19, 4, 4, 'K4S4', '4', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(20, 4, 5, 'K4S5', '5', '2024-06-13 18:26:01', '2024-06-15 17:06:59'),
+(26, 5, 1, 'K5S1', '1', '2024-06-15 17:29:23', NULL),
+(27, 5, 2, 'K5S2', '2', '2024-06-15 17:29:23', NULL),
+(28, 5, 3, 'K5S3', '3', '2024-06-15 17:29:23', NULL),
+(29, 5, 4, 'K5S4', '4', '2024-06-15 17:29:23', NULL),
+(30, 5, 5, 'K5S5', '5', '2024-06-15 17:29:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -573,6 +610,12 @@ ALTER TABLE `tbl_penilaian_alternatif`
   ADD KEY `id_sub_kriteria` (`id_sub_kriteria`);
 
 --
+-- Indexes for table `tbl_range_nilai`
+--
+ALTER TABLE `tbl_range_nilai`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_siswa`
 --
 ALTER TABLE `tbl_siswa`
@@ -585,7 +628,8 @@ ALTER TABLE `tbl_siswa`
 ALTER TABLE `tbl_sub_kriteria`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `kode_sub_kriteria` (`kode_sub_kriteria`),
-  ADD KEY `id_kriteria` (`id_kriteria`);
+  ADD KEY `id_kriteria` (`id_kriteria`),
+  ADD KEY `id_range_nilai` (`id_range_nilai`);
 
 --
 -- Indexes for table `tbl_tahun_akademik`
@@ -661,7 +705,13 @@ ALTER TABLE `tbl_pengguna`
 -- AUTO_INCREMENT for table `tbl_penilaian_alternatif`
 --
 ALTER TABLE `tbl_penilaian_alternatif`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT for table `tbl_range_nilai`
+--
+ALTER TABLE `tbl_range_nilai`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_siswa`
@@ -673,7 +723,7 @@ ALTER TABLE `tbl_siswa`
 -- AUTO_INCREMENT for table `tbl_sub_kriteria`
 --
 ALTER TABLE `tbl_sub_kriteria`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `tbl_tahun_akademik`
@@ -750,7 +800,8 @@ ALTER TABLE `tbl_siswa`
 -- Constraints for table `tbl_sub_kriteria`
 --
 ALTER TABLE `tbl_sub_kriteria`
-  ADD CONSTRAINT `tbl_sub_kriteria_ibfk_1` FOREIGN KEY (`id_kriteria`) REFERENCES `tbl_kriteria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbl_sub_kriteria_ibfk_1` FOREIGN KEY (`id_kriteria`) REFERENCES `tbl_kriteria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_sub_kriteria_ibfk_2` FOREIGN KEY (`id_range_nilai`) REFERENCES `tbl_range_nilai` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
