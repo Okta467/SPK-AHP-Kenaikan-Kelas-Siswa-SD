@@ -322,6 +322,12 @@ else:
               <p><b>Kelas</b>: <span class="xnama_kelas"></span></p>
             </div>
           </div>
+          
+          <div class="badge badge-outline-dark mb-4 w-100">
+            <p class="m-0">
+              <i class="ti-info-alt mr-2"></i>Pastikan kolom input <span class="text-danger">Range Nilai</span> terisi sebelum menyimpan.
+            </p>
+          </div>
 
           <?php
           $query_existing_kriteria_by_tahun_akademik = mysqli_query($connection, 
@@ -349,32 +355,26 @@ else:
           <input type="hidden" name="xid_kelas" class="xid_kelas">
           <input type="hidden" name="xid_tahun_akademik" class="xid_tahun_akademik">
           <?php foreach($kriterias as $kriteria): ?>
-            <input type="hidden" name="xkriteria_ids[]" value="<?= $kriteria['id_kriteria'] ?>">
-            <input type="hidden" name="xsub_kriteria_id_input_names[]" value="<?= "xsub_kriteria_id_{$kriteria['kode_kriteria']}" ?>">
+            <input type="hidden" name="xid_kriterias[]" value="<?= $kriteria['id_kriteria'] ?>">
           <?php endforeach ?>
           
           <div class="row">
 
             <?php foreach($kriterias as $kriteria): ?>
 
-              <div class="form-group col-md-6 col-sm-12 col-xs-12">
-
-                <label class="font-weight-bold"><?= "{$kriteria['kode_kriteria']} - {$kriteria['nama_kriteria']}" ?></label>
-
-                <?php $query_sub_kriteria = mysqli_query($connection, "SELECT id, kode_sub_kriteria, nama_sub_kriteria, bobot FROM tbl_sub_kriteria WHERE id_kriteria = {$kriteria['id_kriteria']}"); ?>
-                
-                <?php while ($sub_kriteria = mysqli_fetch_assoc($query_sub_kriteria)): ?>
-
-                  <div class="form-check ml-4">
-                    <label class="form-check-label">
-                      <input type="radio" class="form-check-input" name="<?= "xsub_kriteria_id_{$kriteria['kode_kriteria']}" ?>" value="<?= $sub_kriteria['id'] ?>" required>
-                      <?= $sub_kriteria['nama_sub_kriteria'] ?>
-                      <i class="input-helper"></i>
-                    </label>
-                  </div>
-                    
-                <?php endwhile ?>
-
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <label><?= "{$kriteria['kode_kriteria']} - {$kriteria['nama_kriteria']}" ?></label>
+                  <input type="number" min="0" max="" name="xnilai_siswas[]" min="0" class="form-control form-control-sm xnilai_siswa" placeholder="Min. 0, Max. 100" required>
+                </div>
+              </div>
+            
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label>Range Nilai</label>
+                  <input type="number" min="0" name="xrange_nilai[]" class="form-control form-control-sm xrange_nilai" placeholder="Range Nilai" readonly required>
+                  <input type="hidden" name="xid_sub_kriterias[]" class="xid_sub_kriteria">
+                </div>
               </div>
             
             <?php endforeach ?>
@@ -449,15 +449,23 @@ else:
           },
           dataType: 'JSON',
           success: function(data) {
+            console.log(data)
             $('#ModalInputPenilaianAlternatif input.xid_alternatif').val(data[0].id_alternatif);
-            $('#ModalInputPenilaianAlternatif input.xid_tahun_akademik').val(data[0].id_tahun_akademik);
             $('#ModalInputPenilaianAlternatif input.xid_kelas').val(data[0].id_kelas);
+            $('#ModalInputPenilaianAlternatif input.xid_tahun_akademik').val(data[0].id_tahun_akademik);
+            
             $('#ModalInputPenilaianAlternatif span.xkode_alternatif').html(data[0].kode_alternatif);
             $('#ModalInputPenilaianAlternatif span.xnama_siswa').html(data[0].nama_siswa);
             $('#ModalInputPenilaianAlternatif span.xnama_kelas').html(data[0].nama_kelas);
 
-            data.forEach(element => {
-              $(`#ModalInputPenilaianAlternatif input[name="xsub_kriteria_id_${element.kode_kriteria}"][value="${element.id_sub_kriteria}"`).prop('checked', true);
+            let index = 0;
+
+            data.forEach(data => {
+              $('#ModalInputPenilaianAlternatif .xnilai_siswa').eq(index).val(data.nilai_siswa);
+              $('#ModalInputPenilaianAlternatif .xid_sub_kriteria').eq(index).val(data.id_sub_kriteria);
+              $('#ModalInputPenilaianAlternatif .xrange_nilai').eq(index).val(data.range_nilai);
+              
+              index++;
             });
             
             $('#ModalInputPenilaianAlternatif').modal('show');
@@ -468,6 +476,35 @@ else:
           }
         })
       });
+
+
+      $('.xnilai_siswa').on('keyup', delay(function(e) {
+        const nilai_siswa = $(this).val();
+        const index = $('.xnilai_siswa').index(this);
+
+        if (!nilai_siswa) {
+          $('#ModalInputPenilaianAlternatif .xid_range_nilai').eq(index).val(null);
+          $('#ModalInputPenilaianAlternatif .xrange_nilai').eq(index).val(null);
+          return;
+        }
+
+        $.ajax({
+          url: 'get_range_nilai.php',
+          type: 'POST',
+          dataType: 'JSON',
+          data: {
+            'nilai_siswa': nilai_siswa
+          },
+          success: function(data) {
+            $('#ModalInputPenilaianAlternatif .xid_sub_kriteria').eq(index).val(data.id_sub_kriteria);
+            $('#ModalInputPenilaianAlternatif .xrange_nilai').eq(index).val(data.range_nilai);
+          },
+          error: function(request, status, error) {
+            // console.log("ajax call went wrong:" + request.responseText);
+            console.log("ajax call went wrong:" + error);
+          }
+        })
+      }, 300));
 
 
       $('.datatables').on('click', '.toggle_modal_hapus', function() {

@@ -16,14 +16,15 @@
     $stmt1 = mysqli_stmt_init($connection);
     $query = 
         "SELECT
-            a.id AS id_penilaian_alternatif,
+            a.id AS id_penilaian_alternatif, a.nilai_siswa,
             b.id AS id_alternatif, b.kode_alternatif,
             c.id AS id_siswa, c.nisn, c.nama_siswa, c.jk, c.alamat, c.tmp_lahir, c.tgl_lahir, c.no_telp, c.email,
             d.id AS id_kelas, d.nama_kelas,
             e.id AS id_kriteria, e.kode_kriteria, e.nama_kriteria, e.status_aktif,
             f.id AS id_tingkat_kepentingan, f.nilai_kepentingan, f.keterangan,
-            g.id AS id_sub_kriteria, g.kode_sub_kriteria, g.nama_sub_kriteria, g.bobot,
-            h.id AS id_tahun_akademik, h.dari_tahun, h.sampai_tahun
+            g.id AS id_sub_kriteria, g.kode_sub_kriteria, g.nama_sub_kriteria,
+            h.id AS id_range_nilai, h.batas_bawah, h.batas_atas, h.range_nilai,
+            i.id AS id_tahun_akademik, i.dari_tahun, i.sampai_tahun
         FROM tbl_penilaian_alternatif AS a
         LEFT JOIN tbl_alternatif AS b
             ON b.id = a.id_alternatif
@@ -37,9 +38,12 @@
             ON f.id = e.id_tingkat_kepentingan
         LEFT JOIN tbl_sub_kriteria AS g
             ON g.id = a.id_sub_kriteria
-        LEFT JOIN tbl_tahun_akademik AS h
-            ON h.id = a.id_tahun_akademik
-        WHERE a.id_alternatif=? AND a.id_tahun_akademik=?";
+        LEFT JOIN tbl_range_nilai AS h
+            ON h.id = g.id_range_nilai
+        LEFT JOIN tbl_tahun_akademik AS i
+            ON i.id = a.id_tahun_akademik
+        WHERE a.id_alternatif=? AND a.id_tahun_akademik=?
+        ORDER BY a.id ASC";
 
     mysqli_stmt_prepare($stmt1, $query);
     mysqli_stmt_bind_param($stmt1, 'ii', $id_alternatif, $id_tahun_akademik);

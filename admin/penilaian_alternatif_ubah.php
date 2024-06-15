@@ -10,12 +10,13 @@
 
     include_once '../config/connection.php';
 
-    $kriteria_ids                = $_POST['xkriteria_ids'];
-    $sub_kriteria_id_input_names = $_POST['xsub_kriteria_id_input_names'];
-    $id_alternatif               = $_POST['xid_alternatif'];
-    $id_tahun_akademik           = $_POST['xid_tahun_akademik'];
-    $id_kelas                    = $_POST['xid_kelas'];
-    $jml_kriteria                = count($kriteria_ids);
+    $id_alternatif     = $_POST['xid_alternatif'];
+    $id_kelas          = $_POST['xid_kelas'];
+    $id_tahun_akademik = $_POST['xid_tahun_akademik'];
+    $id_kriterias      = $_POST['xid_kriterias'];
+    $id_sub_kriterias  = $_POST['xid_sub_kriterias'];
+    $nilai_siswas      = $_POST['xnilai_siswas'];
+    $jml_kriteria      = count($id_kriterias);
 
     // Turn off autocommit mode
     mysqli_autocommit($connection, false);
@@ -38,25 +39,27 @@
     /**
      * Insert Statement
      */
-    $placeholders = implode(', ', array_fill(0, $jml_kriteria, '(?, ?, ?, ?)'));
-    $sql = "INSERT INTO tbl_penilaian_alternatif (id_alternatif, id_kriteria, id_sub_kriteria, id_tahun_akademik) VALUES $placeholders";
+    $placeholders = implode(', ', array_fill(0, $jml_kriteria, '(?, ?, ?, ?, ?)'));
+    $sql = "INSERT INTO tbl_penilaian_alternatif (id_alternatif, id_kriteria, id_sub_kriteria, id_tahun_akademik, nilai_siswa) VALUES $placeholders";
 
     $stmt_insert = mysqli_prepare($connection, $sql);
 
     // Flatten the data arrays to a single array for binding
     $data = [];
     for ($i = 0; $i < $jml_kriteria; $i++) {
-        $id_kriteria = $kriteria_ids[$i];
-        $id_sub_kriteria = $_POST["{$sub_kriteria_id_input_names[$i]}"];
+        $id_kriteria     = $id_kriterias[$i];
+        $id_sub_kriteria = $id_sub_kriterias[$i];
+        $nilai_siswa     = $nilai_siswas[$i];
 
         $data[] = $id_alternatif;
         $data[] = $id_kriteria;
         $data[] = $id_sub_kriteria;
         $data[] = $id_tahun_akademik;
+        $data[] = $nilai_siswa;
     }
 
     // Create the types string (e.g., 'ii' for two integers, 'iiiiii' for six integers, etc.)
-    $types = str_repeat('iiii', $jml_kriteria);
+    $types = str_repeat('iiiid', $jml_kriteria);
     
     // Use call_user_func_array to bind the parameters dynamically
     $bindNames = [];
@@ -70,12 +73,9 @@
         $success = false;
     }
 
-    // Turn on autocommit mode
-    mysqli_autocommit($connection, true);
-
     !$success
         ? mysqli_rollback($connection)
-        : '';
+        : mysqli_autocommit($connection, true);;
 
     !$success
         ? $_SESSION['msg'] = 'other_error'
