@@ -65,6 +65,13 @@
   $formattedRataHasilMatriksPerbandinganKriteria = array();
 
   $formattedBobotKriteria = array();
+
+
+  $jmlRataMatriksPerbandingan = 0;
+
+  $barisTambahanPerkalianBobotDanAlternatif = 0;
+
+  $jmlBarisNilaiPerkalianBobotDanAlternatif = 0;
   ?>
 
 <h4>Properti Untuk Masing-masing Alternatif</h4>
