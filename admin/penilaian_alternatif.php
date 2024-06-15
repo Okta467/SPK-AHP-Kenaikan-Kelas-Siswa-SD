@@ -7,6 +7,7 @@ if (!isAccessAllowed('admin')):
   echo "<meta http-equiv='refresh' content='0;" . base_url_return('index.php?msg=other_error') . "'>";
 else:
   include_once '../config/connection.php';
+  include_once '../helpers/getAllPenilaianAlternatifHelper.php';
 ?>
 
 
@@ -166,41 +167,10 @@ else:
                         
                           <?php
                           $no = 1;
-                          $query_penilaian_alternatif = mysqli_query($connection, 
-                            "SELECT
-                              a.id AS id_siswa, a.nisn, a.nama_siswa, a.jk, a.alamat, a.tmp_lahir, a.tgl_lahir, a.no_telp, a.email,
-                              b.id AS id_alternatif, b.kode_alternatif,
-                              c.id AS id_kelas, c.nama_kelas,
-                              d.id AS id_wali_kelas, d.nama_guru AS nama_wali_kelas, d.nip,
-                              e.id AS id_penilaian_alternatif,
-                              f.id AS id_tahun_akademik, f.dari_tahun, f.sampai_tahun
-                            FROM tbl_siswa AS a
-                            LEFT JOIN tbl_alternatif AS b
-                              ON a.id = b.id_siswa
-                            LEFT JOIN tbl_kelas AS c
-                              ON c.id = a.id_kelas
-                            LEFT JOIN tbl_guru AS d
-                              ON d.id = c.id_wali_kelas
-                            LEFT JOIN tbl_penilaian_alternatif AS e
-                              ON b.id = e.id_alternatif
-                            LEFT JOIN tbl_tahun_akademik AS f
-                              ON f.id = e.id_tahun_akademik
-                            WHERE
-                              b.id IS NOT NULL
-                              AND
-                              (
-                                e.id IS NULL
-                                OR e.id IS NOT NULL
-                              )
-                              OR
-                              (
-                                c.id = {$id_kelas_filter}
-                                AND f.id = {$id_tahun_akademik_filter}
-                              )
-                            GROUP BY a.id
-                            ORDER BY a.id DESC");
+                          $alternatifs = getAllPenilaianAlternatif($id_kelas_filter, $id_tahun_akademik_filter, $connection);
 
-                          while ($alternatif = mysqli_fetch_assoc($query_penilaian_alternatif)): ?>
+                          foreach ($alternatifs as $alternatif):
+                            $id_penilaian_alternatif = $alternatif['id_penilaian_alternatif'] ?? null; ?>
 
                             <tr>
                               <td><?= $no++ ?></td>
@@ -211,7 +181,7 @@ else:
                               <td><?= htmlspecialchars($alternatif['nama_wali_kelas']) . "<br><small class='text-muted'>({$alternatif['nip']})</small>" ?></td>
                               <td>
                                 <?=
-                                !$alternatif['id_penilaian_alternatif']
+                                !$id_penilaian_alternatif
                                   ? '<span class="font-weight-bold text-danger">Belum Dinilai</span>'
                                   : '<span class="font-weight-bold text-success">Sudah Dinilai</span>'
                                 ?>
@@ -219,7 +189,7 @@ else:
                               <td>
                                 
                                 <!-- Toggle Modal Penilaian -->
-                                <?php if ($alternatif['id_penilaian_alternatif']): ?>
+                                <?php if ($id_penilaian_alternatif): ?>
 
                                   <button type="button" class="btn btn-sm btn-outline-secondary btn-icon-text py-1 disabled" data-toggle="tooltip" data-placement="top" title="Sudah Dinilai"><i class="ti-write -alt mr-0"></i></button>
                                   
@@ -237,7 +207,7 @@ else:
                                 
 
                                 <!-- Toggle Modal Ubah Penilaian -->
-                                <?php if (!$alternatif['id_penilaian_alternatif']): ?>
+                                <?php if (!$id_penilaian_alternatif): ?>
 
                                   <button type="button" class="btn btn-sm btn-outline-secondary btn-icon-text py-1 disabled" data-toggle="tooltip" data-placement="top" title="Ubah Penilaian"><i class="ti-pencil-alt -alt mr-0"></i></button>
 
@@ -245,7 +215,7 @@ else:
 
                                   <button type="button" class="btn btn-sm btn-inverse-dark btn-icon-text py-1 toggle_modal_ubah" data-toggle="tooltip" data-placement="top" title="Ubah Penilaian"
                                     data-id_alternatif="<?= $alternatif['id_alternatif'] ?>"
-                                    data-id_tahun_akademik="<?= $alternatif['id_tahun_akademik'] ?>">
+                                    data-id_tahun_akademik="<?= $id_tahun_akademik_filter ?>">
                                     <i class="ti-pencil-alt mr-0"></i>
                                   </button>
 
@@ -253,7 +223,7 @@ else:
                               
 
                                 <!-- Toggle Modal Reset Penilaian -->
-                                <?php if (!$alternatif['id_penilaian_alternatif']): ?>
+                                <?php if (!$id_penilaian_alternatif): ?>
                                   <button type="button" class="btn btn-sm btn-outline-secondary btn-icon-text py-1 disabled" data-toggle="tooltip" data-placement="top" title="Reset Penilaian"><i class="ti-trash -alt mr-0"></i></button>
 
                                 <?php else: ?>
@@ -273,7 +243,7 @@ else:
                               </td>
                             </tr>
 
-                          <?php endwhile ?>
+                          <?php endforeach ?>
 
                         <?php endif ?>
                       </tbody>
@@ -348,7 +318,7 @@ else:
             ? $query_all_kriteria
             : $query_existing_kriteria_by_tahun_akademik;
 
-          $kriterias = mysqli_fetch_all($query_all_kriteria, MYSQLI_ASSOC);
+          $kriterias = mysqli_fetch_all($query_kriteria, MYSQLI_ASSOC);
           ?>
 
           <input type="hidden" name="xid_alternatif" class="xid_alternatif">
