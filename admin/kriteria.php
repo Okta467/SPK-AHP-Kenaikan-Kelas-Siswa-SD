@@ -186,7 +186,8 @@ else:
                 <th>#</th>
                 <th>Kode</th>
                 <th>Nama</th>
-                <th>Bobot</th>
+                <th>Batas Bawah - Atas</th>
+                <th>Range Nilai</th>
               </tr>
             </thead>
             <tbody>
@@ -367,14 +368,18 @@ else:
             'id_kriteria': id_kriteria
           },
           success: function(data) {
-            console.log(data);
-            
             // add datatables row
             let i = 1;
             let rowsData = [];
             
             for (key in data) {
-              rowsData.push([i++, data[key]['kode_sub_kriteria'], data[key]['nama_sub_kriteria'], data[key]['bobot']]);
+              rowsData.push([
+                i++, 
+                data[key]['kode_sub_kriteria'], 
+                data[key]['nama_sub_kriteria'], 
+                `${data[key]['batas_bawah']} - ${data[key]['batas_bawah']}`,
+                data[key]['range_nilai']
+              ]);
             }
             
             datatableDaftarSubKriteria.clear().draw();
