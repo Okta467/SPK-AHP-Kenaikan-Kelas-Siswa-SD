@@ -5,7 +5,7 @@
      * 
      * @param null|array<mixed> $kodeAlternatif
      * @param null|array<int, float> $nilaiAkhir
-     * @return array contains alternative name, nilai_akhir, rank
+     * @return array contains alternative kode, nilai_akhir, rank
      */
     function getRankingAlternatif($kodeAlternatif = null, $nilaiAkhir = null) {
         $jmlKodeAlternatif = count($kodeAlternatif);
