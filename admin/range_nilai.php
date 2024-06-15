@@ -71,6 +71,9 @@ else:
                   <h4 class="card-title"><i class="ti-file mr-2"></i>Data Range Nilai</h4>
                   <button type="button" class="btn btn-sm btn-info btn-icon-text toggle_modal_tambah">Tambah Data<i class="icon-plus btn-icon-append"></i></button>
                 </div>
+                <p class="card-description">
+                  Data range nilai <span class="text-danger">diperlukan</span> saat <span class="text-danger">penilaian alternatif</span>, yaitu menentukan range nilai dari nilai siswa yang diinput.
+                </p>
                 <div class="table-responsive">
                   <table class="table table-striped datatables">
                     <thead>
