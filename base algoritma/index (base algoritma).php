@@ -5,12 +5,20 @@
   include_once 'getConsistencyRatioHelper.php';
   include_once 'getTValueHelper.php';
   include_once 'getRankingAlternatifHelper.php';
+  include_once 'getKelulusanSiswaHelper.php';
 
-  $alternatif = [
+  $nilaiSiswa = [
     ['kode_alternatif' => 'A1', 'kehadiran' => 3, 'tugas' => 4, 'mid' => 5, 'uas' => 4, 'perilaku' => 4],
     ['kode_alternatif' => 'A2', 'kehadiran' => 5, 'tugas' => 4, 'mid' => 4, 'uas' => 3, 'perilaku' => 4],
     ['kode_alternatif' => 'A3', 'kehadiran' => 4, 'tugas' => 3, 'mid' => 5, 'uas' => 4, 'perilaku' => 4],
     ['kode_alternatif' => 'A4', 'kehadiran' => 4, 'tugas' => 4, 'mid' => 3, 'uas' => 3, 'perilaku' => 3],
+  ];
+
+  $alternatif = [
+    ['kode_alternatif' => 'A1', 'kehadiran' => 75, 'tugas' => 85, 'mid' => 96, 'uas' => 87, 'perilaku' => 90],
+    ['kode_alternatif' => 'A2', 'kehadiran' => 90, 'tugas' => 80, 'mid' => 85, 'uas' => 75, 'perilaku' => 88],
+    ['kode_alternatif' => 'A3', 'kehadiran' => 80, 'tugas' => 75, 'mid' => 90, 'uas' => 85, 'perilaku' => 88],
+    ['kode_alternatif' => 'A4', 'kehadiran' => 80, 'tugas' => 80, 'mid' => 77, 'uas' => 78, 'perilaku' => 77],
   ];
 
   $kriteria = [
@@ -693,6 +701,7 @@
       <th>Alternatif</th>
       <th>Nilai Akhir</th>
       <th>Ranking</th>
+      <th>Keterangan Lulus</th>
     </tr>
   </thead>
   <tbody>
@@ -700,18 +709,21 @@
     $no = 1;
     $kodeAlternatif = array_column($alternatif, 'kode_alternatif');
     $nilaiAkhirs    = $totalHasilPerkalianBobotKriteriaDanAlternatif;
-    $dataRankings   = getRankingAlternatif($kodeAlternatif, $nilaiAkhirs);
+    $dataRankings   = getRankingAlternatif($kodeAlternatif, $nilaiAkhirs)['data'];
+    $namaKriterias  = array_map(fn($x) => $x['nama_kriteria'], $kriteria);
+    $kelulusanSiswa = getKelulusanSiswa($alternatif, $namaKriterias)['data'];
     ?>
 
-    <?php foreach($dataRankings['data'] as $dataRanking): ?>
+    <?php for ($i = 0; $i < count($dataRankings); $i++): ?>
 
       <tr>
         <td><?= $no++ ?></td>
-        <td><?= $dataRanking['kode_alternatif'] ?></td>
-        <td><?= number_Format($dataRanking['nilai_akhir'], 3, ',', '.') ?></td>
-        <td><?= $dataRanking['rank'] ?></td>
+        <td><?= $dataRankings[$i]['kode_alternatif'] ?></td>
+        <td><?= number_Format($dataRankings[$i]['nilai_akhir'], 3, ',', '.') ?></td>
+        <td><?= $dataRankings[$i]['rank'] ?></td>
+        <td><?= $kelulusanSiswa[$i]['keterangan_kelulusan'] ?></td>
       </tr>
       
-    <?php endforeach ?>
+    <?php endfor ?>
   </tbody>
 </table>
