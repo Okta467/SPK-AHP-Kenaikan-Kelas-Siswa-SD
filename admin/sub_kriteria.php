@@ -78,7 +78,8 @@ else:
                         <th>#</th>
                         <th>Kode Sub</th>
                         <th>Nama Sub</th>
-                        <th>Bobot</th>
+                        <th>Batas Nilai (Bawah - Atas)</th>
+                        <th>Range Nilai</th>
                         <th>Kode Kriteria</th>
                         <th>Nama Kriteria</th>
                         <th>Aksi</th>
@@ -90,14 +91,17 @@ else:
                       $no = 1;
                       $query_sub_kriteria = mysqli_query($connection, 
                         "SELECT
-                          a.id AS id_sub_kriteria, a.kode_sub_kriteria, a.nama_sub_kriteria, a.bobot,
+                          a.id AS id_sub_kriteria, a.kode_sub_kriteria, a.nama_sub_kriteria,
                           b.id AS id_kriteria, b.kode_kriteria, b.nama_kriteria, b.status_aktif,
-                          c.id AS id_tingkat_kepentingan, c.nilai_kepentingan, c.keterangan
+                          c.id AS id_tingkat_kepentingan, c.nilai_kepentingan, c.keterangan,
+                          d.id AS id_range_nilai, d.batas_bawah, d.batas_atas, d.range_nilai
                         FROM tbl_sub_kriteria AS a
                         LEFT JOIN tbl_kriteria AS b
                           ON a.id_kriteria = b.id
                         LEFT JOIN tbl_tingkat_kepentingan AS c
                           ON b.id_tingkat_kepentingan = c.id
+                        LEFT JOIN tbl_range_nilai AS d
+                          ON a.id_range_nilai = d.id
                         ORDER BY a.id DESC");
 
                       while ($sub_kriteria = mysqli_fetch_assoc($query_sub_kriteria)):
@@ -107,16 +111,17 @@ else:
                           <td><?= $no++ ?></td>
                           <td><?= $sub_kriteria['kode_sub_kriteria'] ?></td>
                           <td><?= $sub_kriteria['nama_sub_kriteria'] ?></td>
-                          <td><?= $sub_kriteria['bobot'] ?></td>
+                          <td><?= "{$sub_kriteria['batas_bawah']} - {$sub_kriteria['batas_atas']}" ?></td>
+                          <td><?= $sub_kriteria['range_nilai'] ?></td>
                           <td><?= $sub_kriteria['kode_kriteria'] ?></td>
                           <td><?= $sub_kriteria['nama_kriteria'] ?></td>
                           <td>
                             <button type="button" class="btn btn-sm btn-inverse-dark btn-icon-text py-1 toggle_modal_ubah"
                               data-id_sub_kriteria="<?= $sub_kriteria['id_sub_kriteria'] ?>"
                               data-id_kriteria="<?= $sub_kriteria['id_kriteria'] ?>"
+                              data-id_range_nilai="<?= $sub_kriteria['id_range_nilai'] ?>"
                               data-kode_sub_kriteria="<?= $sub_kriteria['kode_sub_kriteria'] ?>"
-                              data-nama_sub_kriteria="<?= $sub_kriteria['nama_sub_kriteria'] ?>"
-                              data-bobot="<?= $sub_kriteria['bobot'] ?>">
+                              data-nama_sub_kriteria="<?= $sub_kriteria['nama_sub_kriteria'] ?>">
                               <i class="ti-pencil-alt mr-0"></i>
                             </button>
                             <button type="button" class="btn btn-sm btn-inverse-danger btn-icon-text py-1 toggle_modal_hapus"
@@ -195,8 +200,16 @@ else:
             </div>
             
             <div class="form-group">
-              <label for="xbobot">Bobot</label>
-              <input type="number" name="xbobot" class="form-control form-control-sm xbobot" id="xbobot" placeholder="Nama Kriteria" aria-label="Nama Kriteria" required>
+              <label for="xid_range_nilai">(Range) Batas Bawah - Atas</label>
+              <select name="xid_range_nilai" class="form-control form-control-sm select2 xid_range_nilai" id="xid_range_nilai" required style="width: 100%">
+                <option value="">-- Pilih --</option>
+                <?php $query_range_nilai = mysqli_query($connection, "SELECT id, batas_bawah, batas_atas, range_nilai FROM tbl_range_nilai ORDER BY batas_bawah ASC") ?>
+                <?php while ($range_nilai = mysqli_fetch_assoc($query_range_nilai)): ?>
+
+                  <option value="<?= $range_nilai['id'] ?>"><?= "({$range_nilai['range_nilai']}) -- {$range_nilai['batas_bawah']} - {$range_nilai['batas_atas']}" ?></option>
+
+                <?php endwhile ?>
+              </select>
             </div>
               
           </div>
@@ -240,9 +253,9 @@ else:
         
         $('#ModalInputSubKriteria .xid_sub_kriteria').val(data.id_sub_kriteria);
         $('#ModalInputSubKriteria .select2.xid_kriteria').val(data.id_kriteria).select2().trigger('change');
+        $('#ModalInputSubKriteria .select2.xid_range_nilai').val(data.id_range_nilai).select2().trigger('change');
         $('#ModalInputSubKriteria .xkode_sub_kriteria').val(data.kode_sub_kriteria);
         $('#ModalInputSubKriteria .xnama_sub_kriteria').val(data.nama_sub_kriteria);
-        $('#ModalInputSubKriteria .xbobot').val(data.bobot);
 
         $('#ModalInputSubKriteria').modal('show');
       });
