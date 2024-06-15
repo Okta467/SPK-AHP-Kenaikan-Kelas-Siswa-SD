@@ -41,7 +41,15 @@
         var switchery = new Switchery(elems[i]);
       }
     }
-    
+
+    function delay(fn, ms) {
+      let timer = 0
+      return function(...args) {
+        clearTimeout(timer)
+        timer = setTimeout(fn.bind(this, ...args), ms || 0)
+      }
+    }
+      
     function getURLParameterVal(urlParam) {
       // Get the full URL of the current page
       const url = new URL(window.location.href);
