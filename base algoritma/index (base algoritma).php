@@ -7,17 +7,18 @@
   include_once 'getRankingAlternatifHelper.php';
 
   $alternatif = [
-    ['kode_alternatif' => 'A1', 'kehadiran' => 3, 'harian' => 4, 'tugas' => 5, 'uas' => 4],
-    ['kode_alternatif' => 'A2', 'kehadiran' => 5, 'harian' => 4, 'tugas' => 4, 'uas' => 3],
-    ['kode_alternatif' => 'A3', 'kehadiran' => 4, 'harian' => 3, 'tugas' => 5, 'uas' => 4],
-    ['kode_alternatif' => 'A4', 'kehadiran' => 4, 'harian' => 4, 'tugas' => 3, 'uas' => 3],
+    ['kode_alternatif' => 'A1', 'kehadiran' => 3, 'tugas' => 4, 'mid' => 5, 'uas' => 4, 'perilaku' => 4],
+    ['kode_alternatif' => 'A2', 'kehadiran' => 5, 'tugas' => 4, 'mid' => 4, 'uas' => 3, 'perilaku' => 4],
+    ['kode_alternatif' => 'A3', 'kehadiran' => 4, 'tugas' => 3, 'mid' => 5, 'uas' => 4, 'perilaku' => 4],
+    ['kode_alternatif' => 'A4', 'kehadiran' => 4, 'tugas' => 4, 'mid' => 3, 'uas' => 3, 'perilaku' => 3],
   ];
 
   $kriteria = [
     ['nama_kriteria' => 'kehadiran', 'nilai_kepentingan' => 1],
-    ['nama_kriteria' => 'harian', 'nilai_kepentingan' => 3],
-    ['nama_kriteria' => 'tugas', 'nilai_kepentingan' => 5],
+    ['nama_kriteria' => 'tugas', 'nilai_kepentingan' => 3],
+    ['nama_kriteria' => 'mid', 'nilai_kepentingan' => 5],
     ['nama_kriteria' => 'uas', 'nilai_kepentingan' => 7],
+    ['nama_kriteria' => 'perilaku', 'nilai_kepentingan' => 1],
   ];
     
   $jmlAlternatif = count($alternatif);
@@ -74,22 +75,24 @@
       <th>No</th>
       <th>Alternatif</th>
       <th>Kehadiran</th>
-      <th>Harian</th>
       <th>Tugas</th>
+      <th>MID</th>
       <th>UAS</th>
+      <th>Perilaku</th>
     </tr>
   </thead>
   <tbody>
     <?php $no = 1; ?>
-    <?php for ($i = 0; $i < count($alternatif); $i++): ?>
+    <?php for ($i = 0; $i < $jmlAlternatif; $i++): ?>
 
       <tr>
         <td><?= $no++ ?></td>
         <td><?= $alternatif[$i]['kode_alternatif'] ?></td>
         <td><?= $alternatif[$i]['kehadiran'] ?></td>
-        <td><?= $alternatif[$i]['harian'] ?></td>
         <td><?= $alternatif[$i]['tugas'] ?></td>
+        <td><?= $alternatif[$i]['mid'] ?></td>
         <td><?= $alternatif[$i]['uas'] ?></td>
+        <td><?= $alternatif[$i]['perilaku'] ?></td>
       </tr>
     
     <?php endfor ?>
@@ -544,7 +547,7 @@
           <?php else: ?>
 
             <?php
-            $rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] /= $jmlKriteria;
+            $rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] /= $jmlAlternatif;
 
             $formattedRataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] = number_format($rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i], 3, ',', '.');
             ?>
@@ -576,13 +579,29 @@
     </tr>
   </thead>
   <tbody>
-    <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
+    <?php
+    $jmlRataMatriksPerbandingan = count($rataMatriksPerbandingan);
+    $barisTambahanPerkalianBobotDanAlternatif = $jmlRataMatriksPerbandingan - $jmlAlternatif;
+    $jmlBarisNilaiPerkalianBobotDanAlternatif = $jmlAlternatif + $barisTambahanPerkalianBobotDanAlternatif;
+    ?>
+
+    <?php for ($i = 0; $i < ($jmlBarisNilaiPerkalianBobotDanAlternatif); $i++): ?>
       
       <tr>
 
       <?php for ($j = 0; $j < ($jmlKriteria + 1); $j++): ?>
 
-        <?php if ($j < ($jmlKriteria)): ?>
+        <?php
+        if (
+          $i === ($jmlBarisNilaiPerkalianBobotDanAlternatif - 1)
+          && $barisTambahanPerkalianBobotDanAlternatif > 0
+          && $j < ($jmlKriteria)
+        ):
+        ?>
+
+          <td>&nbsp;</td>
+
+        <?php elseif ($j < ($jmlKriteria)): ?>
 
           <?php
           $currentKriteria = $kriteria[$j]['nama_kriteria'];
