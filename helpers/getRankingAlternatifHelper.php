@@ -5,17 +5,17 @@
      * 
      * @param null|array<mixed> $kodeAlternatif
      * @param null|array<int, float> $nilaiAkhir
-     * @param null|array<string> $namaSiswa
-     * @param null|array<string> $nisnSiswa
-     * @param null|array<string> $jkSiswa
-     * @param null|array<string> $namaKelas
-     * @param null|array<string> $namaWaliKelas
-     * @param null|array<string> $nipWaliKelas
+     * @param null|array<string> $namaSiswa (optional)
+     * @param null|array<string> $nisnSiswa (optional)
+     * @param null|array<string> $jkSiswa (optional)
+     * @param null|array<string> $namaKelas (optional)
+     * @param null|array<string> $namaWaliKelas (optional)
+     * @param null|array<string> $nipWaliKelas (optional)
      * @return array contains alternative kode, nilai_akhir, rank
      */
     function getRankingAlternatif(
-        $kodeAlternatif = null,
-        $nilaiAkhir = null,
+        $kodeAlternatif,
+        $nilaiAkhir,
         $namaSiswa = null,
         $nisnSiswa = null,
         $jkSiswa = null,
@@ -47,12 +47,12 @@
             $data['data'][$i] = [
                 'kode_alternatif' => $kodeAlternatif[$i],
                 'nilai_akhir'     => $nilaiAkhir[$i],
-                'nama_siswa'      => $namaSiswa[$i],
-                'nisn_siswa'      => $nisnSiswa[$i],
-                'jk_siswa'        => $jkSiswa[$i],
-                'nama_kelas'      => $namaKelas[$i],
-                'nama_wali_kelas' => $namaWaliKelas[$i],
-                'nip_wali_kelas'  => $nipWaliKelas[$i]
+                'nama_siswa'      => $namaSiswa[$i] ?? null,
+                'nisn_siswa'      => $nisnSiswa[$i] ?? null,
+                'jk_siswa'        => $jkSiswa[$i] ?? null,
+                'nama_kelas'      => $namaKelas[$i] ?? null,
+                'nama_wali_kelas' => $namaWaliKelas[$i] ?? null,
+                'nip_wali_kelas'  => $nipWaliKelas[$i] ?? null
             ];
         }
 
