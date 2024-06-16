@@ -1101,8 +1101,8 @@ else:
                                           <td><?= $dataRankings[$i]['rank'] ?></td>
                                           <td><?=
                                             strtolower($kelulusanSiswa[$i]['keterangan_kelulusan']) === 'lulus'
-                                              ? '<span class="text-success">Lulus</span>'
-                                              : '<span class="text-danger">Tidak Lulus</span>'
+                                              ? '<span class="font-weight-bold text-success">Lulus</span>'
+                                              : '<span class="font-weight-bold text-danger">Tidak Lulus</span>'
                                           ?></td>
                                         </tr>
                                         
