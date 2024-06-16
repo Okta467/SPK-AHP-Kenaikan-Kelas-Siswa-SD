@@ -30,8 +30,8 @@ else:
 <head>
   <?php include '_partials/head.php' ?>
 
-  <meta name="Description" content="Data Penilaian Alternatif">
-  <title>Data Penilaian Alternatif - <?= SITE_NAME ?></title>
+  <meta name="Description" content="Data Hasil Perhitungan">
+  <title>Data Hasil Perhitungan - <?= SITE_NAME ?></title>
 </head>
 
 <body>
@@ -58,8 +58,8 @@ else:
             <div class="col-md-12 grid-margin">
               <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                  <h3 class="font-weight-bold">Halaman Penilaian Alternatif</h3>
-                  <h6 class="font-weight-normal mb-0">Halaman untuk mengelola (lihat, ubah, dan hapus) data penilaian alternatif.</h6>
+                  <h3 class="font-weight-bold">Halaman Hasil Perhitungan</h3>
+                  <h6 class="font-weight-normal mb-0">Halaman untuk melihat hasil perhitungan alternatif menggunakan metode AHP (<em>Analytical Hierarchy Process</em>).</h6>
                 </div>
                 <div class="col-12 col-xl-4">
                   <div class="justify-content-end d-flex">
