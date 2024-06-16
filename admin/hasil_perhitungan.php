@@ -168,7 +168,7 @@ else:
           <!--/.empty-data -->
 
           <?php else: ?>
-
+              
           <!-- Properti Untuk Masing-masing Alternatif -->
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
@@ -177,6 +177,7 @@ else:
                   <div class="d-flex justify-content-between mb-3">
                     <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Properti Untuk Masing-masing Alternatif</h4>
                   </div>
+                  <p class="card-descriptiton">Nilai di dalam <span class="text-danger">kurung</span> merupakan <span class="text-danger">nilai siswa</span> pada kriteria tersebut.</p>
                   <div class="table-responsive">
                     <table class="table table-striped datatables">
                       <thead>
@@ -199,7 +200,7 @@ else:
                             <?php for ($j = 0; $j < $jmlKriteria; $j++) : 
                               $nama_kriteria = $kriteria[$j]['nama_kriteria'];?>
 
-                              <td><?= $alternatif[$i][$nama_kriteria] ?></td>
+                              <td><?= "{$alternatif[$i][$nama_kriteria]} <small class='text-muted'>({$alternatif_nilai_siswa[$i][$nama_kriteria]})</small>" ?></td>
 
                             <?php endfor ?>
 
@@ -593,459 +594,538 @@ else:
           
             <?php $currentKriteria = $kriteria[$k]['nama_kriteria']; ?>
             
-            <h3 class="mb-4"><?= '<i class="ti-pencil mr-2"></i> ' . ucwords($kriteria[$k]['nama_kriteria']) ?></h3>
-
-
-            <!-- Nilai Matriks Perbandingan Berpasangan -->
+            <!-- NAV PILLS CRITERIAS -->
             <div class="row">
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex justify-content-between mb-3">
-                      <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Nilai Matriks Perbandingan Berpasangan</h4>
+                      <h4 class="card-title"><i class="ti-write mr-2"></i><?= ucwords($kriteria[$k]['nama_kriteria']) ?></h4>
                     </div>
-                    <div class="table-responsive">
-                      <table class="table table-striped datatables w-100">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>&nbsp;</th>
-                            <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
-                              <th><?= $alternatif[$i]['kode_alternatif'] ?></th>
-                            <?php endfor ?>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
-                            
-                            <tr>
+                    <div class="col-md-12">
+                      <ul class="nav nav-pills nav-pills-custom" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link" id="<?= "{$kriteria[$k]['nama_kriteria']}_nilai_tab" ?>" data-toggle="tab" href="<?= "#{$kriteria[$k]['nama_kriteria']}_nilai" ?>" role="tab" aria-controls="<?= "{$kriteria[$k]['nama_kriteria']}_nilai" ?>" aria-selected="false">Nilai</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="<?= "{$kriteria[$k]['nama_kriteria']}_transformasi_tab" ?>" data-toggle="tab" href="<?= "#{$kriteria[$k]['nama_kriteria']}_transformasi" ?>" role="tab" aria-controls="<?= "{$kriteria[$k]['nama_kriteria']}_transformasi" ?>" aria-selected="false">Transformasi</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="<?= "{$kriteria[$k]['nama_kriteria']}_normalisasi_tab" ?>" data-toggle="tab" href="<?= "#{$kriteria[$k]['nama_kriteria']}_normalisasi" ?>" role="tab" aria-controls="<?= "{$kriteria[$k]['nama_kriteria']}_normalisasi" ?>" aria-selected="false">Normalisasi</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" id="<?= "{$kriteria[$k]['nama_kriteria']}_hasil_tab" ?>" data-toggle="tab" href="<?= "#{$kriteria[$k]['nama_kriteria']}_hasil" ?>" role="tab" aria-controls="<?= "{$kriteria[$k]['nama_kriteria']}_hasil" ?>" aria-selected="true">Hasil</a>
+                        </li>
+                      </ul>
+                      <div class="tab-content tab-content-custom-pill" id="myTabContent">
 
-                              <td><?= ($i + 1) ?></td>
-                    
-                            <?php for ($j = 0; $j < ($jmlAlternatif); $j++): ?>
-                    
-                              <?php
-                              $matriksPerbandinganKriteria[$currentKriteria][$i][$j] = ($i === $j)
-                                ? 1
-                                : $alternatif[$i][$currentKriteria] . '/' . $alternatif[$j][$currentKriteria];
-                              ?>
-                    
-                              <?php if ($j === 0): ?>
-                    
-                                <td class="font-weight-bold"><?= $alternatif[$i]['kode_alternatif'] ?></td>
-                    
-                              <?php endif ?>
-                    
-                              <td><?= $matriksPerbandinganKriteria[$currentKriteria][$i][$j] ?></td>
-                    
-                            <?php endfor ?>
-                            
-                            </tr>
-                    
-                          <?php endfor ?>
-                        </tbody>
-                      </table>
+                        
+                        <!-- Nilai Matriks Perbandingan Berpasangan -->
+                        <div class="tab-pane fade" id="<?= "{$kriteria[$k]['nama_kriteria']}_nilai" ?>" role="tabpanel" aria-labelledby="<?= "{$kriteria[$k]['nama_kriteria']}_nilai_tab" ?>">
+                          <div class="row">
+                            <div class="col-lg-12 grid-margin stretch-card">
+                              <div class="card">
+                                <div class="card-body">
+                                  <div class="d-flex justify-content-between mb-3">
+                                    <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Nilai Matriks Perbandingan Berpasangan</h4>
+                                  </div>
+                                  <div class="table-responsive">
+                                    <table class="table table-striped datatables w-100">
+                                      <thead>
+                                        <tr>
+                                          <th>#</th>
+                                          <th>&nbsp;</th>
+                                          <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
+                                            <th><?= $alternatif[$i]['kode_alternatif'] ?></th>
+                                          <?php endfor ?>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
+                                          
+                                          <tr>
+              
+                                            <td><?= ($i + 1) ?></td>
+                                  
+                                          <?php for ($j = 0; $j < ($jmlAlternatif); $j++): ?>
+                                  
+                                            <?php
+                                            $matriksPerbandinganKriteria[$currentKriteria][$i][$j] = ($i === $j)
+                                              ? 1
+                                              : $alternatif[$i][$currentKriteria] . '/' . $alternatif[$j][$currentKriteria];
+                                            ?>
+                                  
+                                            <?php if ($j === 0): ?>
+                                  
+                                              <td class="font-weight-bold"><?= $alternatif[$i]['kode_alternatif'] ?></td>
+                                  
+                                            <?php endif ?>
+                                  
+                                            <td><?= $matriksPerbandinganKriteria[$currentKriteria][$i][$j] ?></td>
+                                  
+                                          <?php endfor ?>
+                                          
+                                          </tr>
+                                  
+                                        <?php endfor ?>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/.nilai-matriks-perbandingan-berpasangan -->
+
+                        
+                        <!-- Transformasi Matriks Perbandingan Berpasangan -->
+                        <div class="tab-pane fade" id="<?= "{$kriteria[$k]['nama_kriteria']}_transformasi" ?>" role="tabpanel" aria-labelledby="<?= "{$kriteria[$k]['nama_kriteria']}_transformasi_tab" ?>">
+                          <div class="row">
+                            <div class="col-lg-12 grid-margin stretch-card">
+                              <div class="card">
+                                <div class="card-body">
+                                  <div class="d-flex justify-content-between mb-3">
+                                    <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Transformasi Matriks Perbandingan Berpasangan</h4>
+                                  </div>
+                                  <p class="card-description">
+                                    Baris kolom <span class="text-danger">Jumlah</span> merupakan total keseluruhan tiap kolom dari kriteria.
+                                  </p>
+                                  <div class="table-responsive">
+                                    <table class="table table-striped datatables w-100">
+                                      <thead>
+                                        <tr>
+                                          <th>#</th>
+                                          <th>&nbsp;</th>
+                                          <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
+                                            <th><?= $alternatif[$i]['kode_alternatif'] ?></th>
+                                          <?php endfor ?>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
+                                          
+                                          <tr>
+              
+                                            <td><?= ($i + 1) ?></td>
+                                  
+                                          <?php for ($j = 0; $j < ($jmlAlternatif); $j++): ?>
+                                  
+                                            <?php
+                                            $matriksPerbandinganKriteria[$currentKriteria][$i][$j] = ($i === $j)
+                                              ? 1
+                                              : $alternatif[$i][$currentKriteria] / $alternatif[$j][$currentKriteria];
+                                
+                                            @$totalMatriksPerbandinganKriteria[$currentKriteria][$j] += $matriksPerbandinganKriteria[$currentKriteria][$i][$j];
+                                
+                                            $formattedMatriksPerbandinganKriteria[$currentKriteria][$i][$j] = number_format($matriksPerbandinganKriteria[$currentKriteria][$i][$j], 3, ',', '.');
+                                
+                                            $formattedTotalMatriksPerbandinganKriteria[$currentKriteria][$j] = number_format($totalMatriksPerbandinganKriteria[$currentKriteria][$j], 3, ',', '.');
+                                            ?>
+                                
+                                            <?php if ($j === 0): ?>
+                                
+                                              <td class="font-weight-bold"><?= $alternatif[$i]['kode_alternatif'] ?></td>
+                                
+                                            <?php endif ?>
+                                
+                                            <td><?= $formattedMatriksPerbandinganKriteria[$currentKriteria][$i][$j] ?></td>
+                                              
+                                          <?php endfor ?>
+                                  
+                                        <?php endfor ?>
+                                      </tbody>
+                                      <tfoot>
+                                        <tr class="table-info">
+                                          <td>&nbsp;</td>
+                                          <td class="font-weight-bold">Jumlah</td>
+                                          <?php for ($i = 0; $i < $jmlAlternatif; $i++): ?>
+                                            <td class="font-weight-bold"><?= $formattedTotalMatriksPerbandinganKriteria[$currentKriteria][$i] ?></td>
+                                          <?php endfor ?>
+                                        </tr>
+                                      </tfoot>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/.transformasi-matriks-perbandingan-berpasangan -->
+                          
+                        
+                        <!-- Normalisasi Matriks Perbandingan Berpasangan -->
+                        <div class="tab-pane fade" id="<?= "{$kriteria[$k]['nama_kriteria']}_normalisasi" ?>" role="tabpanel" aria-labelledby="<?= "{$kriteria[$k]['nama_kriteria']}_normalisasi_tab" ?>">
+                          <div class="row">
+                            <div class="col-lg-12 grid-margin stretch-card">
+                              <div class="card">
+                                <div class="card-body">
+                                  <div class="d-flex justify-content-between mb-3">
+                                    <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Normalisasi Matriks Perbandingan Berpasangan</h4>
+                                  </div>
+                                  <div class="table-responsive">
+                                    <table class="table table-striped datatables w-100">
+                                      <thead>
+                                        <tr>
+                                          <th>#</th>
+                                          <th>&nbsp;</th>
+                                          <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
+                                            <th><?= $alternatif[$i]['kode_alternatif'] ?></th>
+                                          <?php endfor ?>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
+                                          
+                                          <tr>
+              
+                                            <td><?= ($i + 1) ?></td>
+                                  
+                                          <?php for ($j = 0; $j < ($jmlAlternatif); $j++): ?>
+                                  
+                                            <?php if ($j === 0): ?>
+                                  
+                                              <td class="font-weight-bold"><?= $alternatif[$i]['kode_alternatif'] ?></td>
+                                  
+                                            <?php endif ?>
+                                  
+                                            <td><?= "{$formattedMatriksPerbandinganKriteria[$currentKriteria][$i][$j]} / {$formattedTotalMatriksPerbandinganKriteria[$currentKriteria][$j]}" ?></td>
+                                              
+                                          <?php endfor ?>
+                                  
+                                        <?php endfor ?>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/.normalisasi-matriks-perbandingan-berpasangan -->
+
+                        
+                        <!-- Hasil Normalisasi dan Nilai Rata-Rata Wj -->
+                        <div class="tab-pane fade show active" id="<?= "{$kriteria[$k]['nama_kriteria']}_hasil" ?>" role="tabpanel" aria-labelledby="<?= "{$kriteria[$k]['nama_kriteria']}_hasil_tab" ?>">
+                          <div class="row">
+                            <div class="col-lg-12 grid-margin stretch-card">
+                              <div class="card">
+                                <div class="card-body">
+                                  <div class="d-flex justify-content-between mb-3">
+                                    <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Hasil Normalisasi dan Nilai Rata-Rata W<sub>j</sub></h4>
+                                  </div>
+                                  <div class="table-responsive">
+                                    <table class="table table-striped datatables w-100">
+                                      <thead>
+                                        <tr>
+                                          <th>#</th>
+                                          <th>&nbsp;</th>
+                                          <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
+                                            <th><?= $alternatif[$i]['kode_alternatif'] ?></th>
+                                          <?php endfor ?>
+                                          <th>Rata-Rata</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
+                                          
+                                          <tr>
+              
+                                            <td><?= ($i + 1) ?></td>
+                                  
+                                          <?php for ($j = 0; $j < ($jmlAlternatif + 1); $j++): ?>
+                                  
+                                            <?php if ($j === 0): ?>
+                                  
+                                              <td class="font-weight-bold"><?= $alternatif[$i]['kode_alternatif'] ?></td>
+                                  
+                                            <?php endif ?>
+                                  
+                                            <?php if ($j < $jmlAlternatif): ?>
+                                  
+                                              <?php
+                                              $hasilMatriksPerbandinganKriteria[$currentKriteria][$i][$j] = $matriksPerbandinganKriteria[$currentKriteria][$i][$j] / $totalMatriksPerbandinganKriteria[$currentKriteria][$j];
+                                  
+                                              @$rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] += $hasilMatriksPerbandinganKriteria[$currentKriteria][$i][$j] ?? 0;
+                                  
+                                              $formattedHasilMatriksPerbandinganKriteria[$currentKriteria][$i][$j] = number_format($hasilMatriksPerbandinganKriteria[$currentKriteria][$i][$j], 3, ',', '.');
+                                              ?>
+                                  
+                                              <td><?= $formattedHasilMatriksPerbandinganKriteria[$currentKriteria][$i][$j] ?></td>
+                                  
+                                            <?php else: ?>
+                                  
+                                              <?php
+                                              $rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] /= $jmlAlternatif;
+                                  
+                                              $formattedRataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] = number_format($rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i], 3, ',', '.');
+                                              ?>
+                                  
+                                              <td><?= $formattedRataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] ?></td>
+                                              
+                                            <?php endif ?>
+                                              
+                                          <?php endfor ?>
+                                  
+                                        <?php endfor ?>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/.hasil-normalisasi-dan-nilai-rata-rata-wj -->  
+
+
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <!--/.nilai-matriks-perbandingan-berpasangan -->
-
-            
-            <!-- Transformasi Matriks Perbandingan Berpasangan -->
-            <div class="row">
-              <div class="col-lg-12 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between mb-3">
-                      <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Transformasi Matriks Perbandingan Berpasangan</h4>
-                    </div>
-                    <p class="card-description">
-                      Baris kolom <span class="text-danger">Jumlah</span> merupakan total keseluruhan tiap kolom dari kriteria.
-                    </p>
-                    <div class="table-responsive">
-                      <table class="table table-striped datatables w-100">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>&nbsp;</th>
-                            <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
-                              <th><?= $alternatif[$i]['kode_alternatif'] ?></th>
-                            <?php endfor ?>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
-                            
-                            <tr>
-
-                              <td><?= ($i + 1) ?></td>
-                    
-                            <?php for ($j = 0; $j < ($jmlAlternatif); $j++): ?>
-                    
-                              <?php
-                              $matriksPerbandinganKriteria[$currentKriteria][$i][$j] = ($i === $j)
-                                ? 1
-                                : $alternatif[$i][$currentKriteria] / $alternatif[$j][$currentKriteria];
-                  
-                              @$totalMatriksPerbandinganKriteria[$currentKriteria][$j] += $matriksPerbandinganKriteria[$currentKriteria][$i][$j];
-                  
-                              $formattedMatriksPerbandinganKriteria[$currentKriteria][$i][$j] = number_format($matriksPerbandinganKriteria[$currentKriteria][$i][$j], 3, ',', '.');
-                  
-                              $formattedTotalMatriksPerbandinganKriteria[$currentKriteria][$j] = number_format($totalMatriksPerbandinganKriteria[$currentKriteria][$j], 3, ',', '.');
-                              ?>
-                  
-                              <?php if ($j === 0): ?>
-                  
-                                <td class="font-weight-bold"><?= $alternatif[$i]['kode_alternatif'] ?></td>
-                  
-                              <?php endif ?>
-                  
-                              <td><?= $formattedMatriksPerbandinganKriteria[$currentKriteria][$i][$j] ?></td>
-                                
-                            <?php endfor ?>
-                    
-                          <?php endfor ?>
-                        </tbody>
-                        <tfoot>
-                          <tr class="table-info">
-                            <td>&nbsp;</td>
-                            <td class="font-weight-bold">Jumlah</td>
-                            <?php for ($i = 0; $i < $jmlAlternatif; $i++): ?>
-                              <td class="font-weight-bold"><?= $formattedTotalMatriksPerbandinganKriteria[$currentKriteria][$i] ?></td>
-                            <?php endfor ?>
-                          </tr>
-                        </tfoot>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--/.transformasi-matriks-perbandingan-berpasangan -->
-
-            
-            <!-- Normalisasi Matriks Perbandingan Berpasangan -->
-            <div class="row">
-              <div class="col-lg-12 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between mb-3">
-                      <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Normalisasi Matriks Perbandingan Berpasangan</h4>
-                    </div>
-                    <div class="table-responsive">
-                      <table class="table table-striped datatables w-100">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>&nbsp;</th>
-                            <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
-                              <th><?= $alternatif[$i]['kode_alternatif'] ?></th>
-                            <?php endfor ?>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
-                            
-                            <tr>
-
-                              <td><?= ($i + 1) ?></td>
-                    
-                            <?php for ($j = 0; $j < ($jmlAlternatif); $j++): ?>
-                    
-                              <?php if ($j === 0): ?>
-                    
-                                <td class="font-weight-bold"><?= $alternatif[$i]['kode_alternatif'] ?></td>
-                    
-                              <?php endif ?>
-                    
-                              <td><?= "{$formattedMatriksPerbandinganKriteria[$currentKriteria][$i][$j]} / {$formattedTotalMatriksPerbandinganKriteria[$currentKriteria][$j]}" ?></td>
-                                
-                            <?php endfor ?>
-                    
-                          <?php endfor ?>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--/.normalisasi-matriks-perbandingan-berpasangan -->
-
-            
-            <!-- Hasil Normalisasi dan Nilai Rata-Rata Wj -->
-            <div class="row">
-              <div class="col-lg-12 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between mb-3">
-                      <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Hasil Normalisasi dan Nilai Rata-Rata W<sub>j</sub></h4>
-                    </div>
-                    <div class="table-responsive">
-                      <table class="table table-striped datatables w-100">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>&nbsp;</th>
-                            <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
-                              <th><?= $alternatif[$i]['kode_alternatif'] ?></th>
-                            <?php endfor ?>
-                            <th>Rata-Rata</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
-                            
-                            <tr>
-
-                              <td><?= ($i + 1) ?></td>
-                    
-                            <?php for ($j = 0; $j < ($jmlAlternatif + 1); $j++): ?>
-                    
-                              <?php if ($j === 0): ?>
-                    
-                                <td class="font-weight-bold"><?= $alternatif[$i]['kode_alternatif'] ?></td>
-                    
-                              <?php endif ?>
-                    
-                              <?php if ($j < $jmlAlternatif): ?>
-                    
-                                <?php
-                                $hasilMatriksPerbandinganKriteria[$currentKriteria][$i][$j] = $matriksPerbandinganKriteria[$currentKriteria][$i][$j] / $totalMatriksPerbandinganKriteria[$currentKriteria][$j];
-                    
-                                @$rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] += $hasilMatriksPerbandinganKriteria[$currentKriteria][$i][$j] ?? 0;
-                    
-                                $formattedHasilMatriksPerbandinganKriteria[$currentKriteria][$i][$j] = number_format($hasilMatriksPerbandinganKriteria[$currentKriteria][$i][$j], 3, ',', '.');
-                                ?>
-                    
-                                <td><?= $formattedHasilMatriksPerbandinganKriteria[$currentKriteria][$i][$j] ?></td>
-                    
-                              <?php else: ?>
-                    
-                                <?php
-                                $rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] /= $jmlAlternatif;
-                    
-                                $formattedRataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] = number_format($rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i], 3, ',', '.');
-                                ?>
-                    
-                                <td><?= $formattedRataHasilMatriksPerbandinganKriteria[$currentKriteria][$i] ?></td>
-                                
-                              <?php endif ?>
-                                
-                            <?php endfor ?>
-                    
-                          <?php endfor ?>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--/.hasil-normalisasi-dan-nilai-rata-rata-wj -->
-          
+            <!--/.nav-pills-criterias -->
 
           <?php endfor ?>
           
           <!-- END ALL CRITERIAS -->
 
           
-          <!-- Nilai Perkalian Bobot Kriteria dan Alternatif yang Selesai Dihitung -->
+            
+          <!-- NAV PILLS RESULT -->
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex justify-content-between mb-3">
-                    <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Nilai Perkalian Bobot Kriteria dan Alternatif yang Selesai Dihitung</h4>
+                    <h4 class="card-title"><i class="ti-write mr-2"></i>Hasil Perhitungan</h4>
                   </div>
-                  <div class="table-responsive">
-                    <table class="table table-striped datatables w-100">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <?php for ($i = 1; $i <= ($jmlKriteria); $i++): ?>
-                            <th><?= "K{$i}" ?></th>
-                          <?php endfor ?>
-                          <th>Nilai Bobot Kriteria W<sub>j</sub></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                        $jmlRataMatriksPerbandingan = count($rataMatriksPerbandingan);
-                        $barisTambahanPerkalianBobotDanAlternatif = $jmlRataMatriksPerbandingan - $jmlAlternatif;
-                        $jmlBarisNilaiPerkalianBobotDanAlternatif = $jmlAlternatif + $barisTambahanPerkalianBobotDanAlternatif;
-                        ?>
-                    
-                        <?php for ($i = 0; $i < ($jmlBarisNilaiPerkalianBobotDanAlternatif); $i++): ?>
-                          
-                          <tr>
+                  <div class="col-md-12">
+                    <ul class="nav nav-pills nav-pills-custom" id="myTab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link" id="nilai_perhitungan_tab" data-toggle="tab" href="#nilai_perhitungan" role="tab" aria-controls="nilai_perhitungan" aria-selected="false">Nilai</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="hasil_perhitungan_tab" data-toggle="tab" href="#hasil_perhitungan" role="tab" aria-controls="hasil_perhitungan" aria-selected="false">Hasil</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" id="ranking_perhitungan_tab" data-toggle="tab" href="#ranking_perhitungan" role="tab" aria-controls="ranking_perhitungan" aria-selected="true">Ranking</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content tab-content-custom-pill" id="myTabContent">
 
-                            <td><?= ($i + 1) ?></td>
-                    
-                          <?php for ($j = 0; $j < ($jmlKriteria + 1); $j++): ?>
-                    
-                            <?php
-                            if (
-                              $i === ($jmlBarisNilaiPerkalianBobotDanAlternatif - 1)
-                              && $barisTambahanPerkalianBobotDanAlternatif > 0
-                              && $j < ($jmlKriteria)
-                            ):
-                            ?>
-                    
-                              <td>&nbsp;</td>
-                    
-                            <?php elseif ($j < ($jmlKriteria)): ?>
-                    
-                              <?php
-                              $currentKriteria = $kriteria[$j]['nama_kriteria'];
-                    
-                              $bobotKriteria[$i][$currentKriteria] = $rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i];
-                    
-                              $formattedBobotKriteria[$i][$currentKriteria] = number_format($bobotKriteria[$i][$currentKriteria], 3, ',', '.');
-                              ?>
-                    
-                              <td><?= $formattedBobotKriteria[$i][$currentKriteria] ?></td>
-                    
-                            <?php else: ?>
-                    
-                              <td><?= $formattedRataMatriksPerbandingan[$i] ?></td>
-                              
-                            <?php endif ?>
-                    
-                          <?php endfor ?>
-                          
-                          </tr>
-                    
-                        <?php endfor ?>
-                      </tbody>
-                    </table>
+                      
+                      <!-- Nilai Perkalian Bobot Kriteria dan Alternatif yang Selesai Dihitung -->
+                      <div class="tab-pane fade" id="nilai_perhitungan" role="tabpanel" aria-labelledby="nilai_perhitungan_tab">
+                        <div class="row">
+                          <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="card">
+                              <div class="card-body">
+                                <div class="d-flex justify-content-between mb-3">
+                                  <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Nilai Perkalian Bobot Kriteria dan Alternatif yang Selesai Dihitung</h4>
+                                </div>
+                                <div class="table-responsive">
+                                  <table class="table table-striped datatables w-100">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <?php for ($i = 1; $i <= ($jmlKriteria); $i++): ?>
+                                          <th><?= "K{$i}" ?></th>
+                                        <?php endfor ?>
+                                        <th>Nilai Bobot Kriteria W<sub>j</sub></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <?php
+                                      $jmlRataMatriksPerbandingan = count($rataMatriksPerbandingan);
+                                      $barisTambahanPerkalianBobotDanAlternatif = $jmlRataMatriksPerbandingan - $jmlAlternatif;
+                                      $jmlBarisNilaiPerkalianBobotDanAlternatif = $jmlAlternatif + $barisTambahanPerkalianBobotDanAlternatif;
+                                      ?>
+                                  
+                                      <?php for ($i = 0; $i < ($jmlBarisNilaiPerkalianBobotDanAlternatif); $i++): ?>
+                                        
+                                        <tr>
+              
+                                          <td><?= ($i + 1) ?></td>
+                                  
+                                        <?php for ($j = 0; $j < ($jmlKriteria + 1); $j++): ?>
+                                  
+                                          <?php
+                                          if (
+                                            $i === ($jmlBarisNilaiPerkalianBobotDanAlternatif - 1)
+                                            && $barisTambahanPerkalianBobotDanAlternatif > 0
+                                            && $j < ($jmlKriteria)
+                                          ):
+                                          ?>
+                                  
+                                            <td>&nbsp;</td>
+                                  
+                                          <?php elseif ($j < ($jmlKriteria)): ?>
+                                  
+                                            <?php
+                                            $currentKriteria = $kriteria[$j]['nama_kriteria'];
+                                  
+                                            $bobotKriteria[$i][$currentKriteria] = $rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i];
+                                  
+                                            $formattedBobotKriteria[$i][$currentKriteria] = number_format($bobotKriteria[$i][$currentKriteria], 3, ',', '.');
+                                            ?>
+                                  
+                                            <td><?= $formattedBobotKriteria[$i][$currentKriteria] ?></td>
+                                  
+                                          <?php else: ?>
+                                  
+                                            <td><?= $formattedRataMatriksPerbandingan[$i] ?></td>
+                                            
+                                          <?php endif ?>
+                                  
+                                        <?php endfor ?>
+                                        
+                                        </tr>
+                                  
+                                      <?php endfor ?>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--/.nilai-perkalian-bobot-kriteria-dan-alternatif-yang-selesai-dihitung -->
+
+                      
+                      <!-- Hasil Nilai Perkalian Bobot Kriteria dan Alternatif yang Selesai Dihitung -->
+                      <div class="tab-pane fade" id="hasil_perhitungan" role="tabpanel" aria-labelledby="hasil_perhitungan_tab">
+                        <div class="row">
+                          <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="card">
+                              <div class="card-body">
+                                <div class="d-flex justify-content-between mb-3">
+                                  <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Hasil Nilai Perkalian Bobot Kriteria dan Alternatif yang Selesai Dihitung</h4>
+                                </div>
+                                <div class="table-responsive">
+                                  <table class="table table-striped datatables w-100">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <?php for ($i = 1; $i <= ($jmlKriteria); $i++): ?>
+                                          <th><?= "K{$i}" ?></th>
+                                        <?php endfor ?>
+                                        <th>Total</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
+                                        
+                                        <tr>
+                
+                                          <td><?= ($i + 1) ?></td>
+                                  
+                                        <?php for ($j = 0; $j < ($jmlKriteria + 1); $j++): ?>
+                                  
+                                          <?php if ($j < ($jmlKriteria)): ?>
+                                  
+                                            <?php
+                                            $currentKriteria = $kriteria[$j]['nama_kriteria'];
+                                  
+                                            $hasilPerkalianBobotKriteriaDanAlternatif[$i][$currentKriteria] = $bobotKriteria[$i][$currentKriteria] * $rataMatriksPerbandingan[$j];
+                                  
+                                            @$totalHasilPerkalianBobotKriteriaDanAlternatif[$i] += $hasilPerkalianBobotKriteriaDanAlternatif[$i][$currentKriteria];
+                                  
+                                            $formattedHasilPerkalianBobotKriteriaDanAlternatif[$i][$currentKriteria] = number_format($hasilPerkalianBobotKriteriaDanAlternatif[$i][$currentKriteria], 3, ',', '.');
+                                  
+                                            $formattedTotalHasilPerkalianBobotKriteriaDanAlternatif[$i] = number_format($totalHasilPerkalianBobotKriteriaDanAlternatif[$i], 3, ',', '.');
+                                            ?>
+                                  
+                                            <td><?= $formattedHasilPerkalianBobotKriteriaDanAlternatif[$i][$currentKriteria] ?></td>
+                                  
+                                          <?php else: ?>
+                                  
+                                            <td><?= $formattedTotalHasilPerkalianBobotKriteriaDanAlternatif[$i] ?></td>
+                                            
+                                          <?php endif ?>
+                                  
+                                        <?php endfor ?>
+                                        
+                                        </tr>
+                                  
+                                      <?php endfor ?>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--/.hasil-nilai-perkalian-bobot-kriteria-dan-alternatif-yang-selesai-dihitung -->
+
+                      
+                      <!-- Ranking -->
+                      <div class="tab-pane fade show active" id="ranking_perhitungan" role="tabpanel" aria-labelledby="ranking_perhitungan_tab">
+                        <div class="row">
+                          <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="card">
+                              <div class="card-body">
+                                <div class="d-flex justify-content-between mb-3">
+                                  <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Ranking</h4>
+                                </div>
+                                <div class="table-responsive">
+                                  <table class="table table-striped datatables w-100">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <th>Alternatif</th>
+                                        <th>Nilai Akhir</th>
+                                        <th>Ranking</th>
+                                        <th>Keterangan Lulus</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <?php
+                                      $no = 1;
+                                      $kodeAlternatif = array_column($alternatif, 'kode_alternatif');
+                                      $nilaiAkhirs    = $totalHasilPerkalianBobotKriteriaDanAlternatif;
+                                      $dataRankings   = getRankingAlternatif($kodeAlternatif, $nilaiAkhirs)['data'];
+                                      $namaKriterias  = array_map(fn($x) => $x['nama_kriteria'], $kriteria);
+                                      $kelulusanSiswa = getKelulusanSiswa($alternatif_nilai_siswa, $namaKriterias)['data'];
+                                      ?>
+                                  
+                                      <?php for ($i = 0; $i < count($dataRankings); $i++): ?>
+                                  
+                                        <tr>
+                                          <td><?= $no++ ?></td>
+                                          <td><?= $dataRankings[$i]['kode_alternatif'] ?></td>
+                                          <td><?= number_Format($dataRankings[$i]['nilai_akhir'], 3, ',', '.') ?></td>
+                                          <td><?= $dataRankings[$i]['rank'] ?></td>
+                                          <td><?=
+                                            strtolower($kelulusanSiswa[$i]['keterangan_kelulusan']) === 'lulus'
+                                              ? '<span class="text-success">Lulus</span>'
+                                              : '<span class="text-danger">Tidak Lulus</span>'
+                                          ?></td>
+                                        </tr>
+                                        
+                                      <?php endfor ?>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--/.ranking -->
+
+
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!--/.nilai-perkalian-bobot-kriteria-dan-alternatif-yang-selesai-dihitung -->
-
+          <!--/.nav-pills-result -->
           
-          <!-- Hasil Nilai Perkalian Bobot Kriteria dan Alternatif yang Selesai Dihitung -->
-          <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between mb-3">
-                    <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Hasil Nilai Perkalian Bobot Kriteria dan Alternatif yang Selesai Dihitung</h4>
-                  </div>
-                  <div class="table-responsive">
-                    <table class="table table-striped datatables w-100">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <?php for ($i = 1; $i <= ($jmlKriteria); $i++): ?>
-                            <th><?= "K{$i}" ?></th>
-                          <?php endfor ?>
-                          <th>Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php for ($i = 0; $i < ($jmlAlternatif); $i++): ?>
-                          
-                          <tr>
-  
-                            <td><?= ($i + 1) ?></td>
-                    
-                          <?php for ($j = 0; $j < ($jmlKriteria + 1); $j++): ?>
-                    
-                            <?php if ($j < ($jmlKriteria)): ?>
-                    
-                              <?php
-                              $currentKriteria = $kriteria[$j]['nama_kriteria'];
-                    
-                              $hasilPerkalianBobotKriteriaDanAlternatif[$i][$currentKriteria] = $bobotKriteria[$i][$currentKriteria] * $rataMatriksPerbandingan[$j];
-                    
-                              @$totalHasilPerkalianBobotKriteriaDanAlternatif[$i] += $hasilPerkalianBobotKriteriaDanAlternatif[$i][$currentKriteria];
-                    
-                              $formattedHasilPerkalianBobotKriteriaDanAlternatif[$i][$currentKriteria] = number_format($hasilPerkalianBobotKriteriaDanAlternatif[$i][$currentKriteria], 3, ',', '.');
-                    
-                              $formattedTotalHasilPerkalianBobotKriteriaDanAlternatif[$i] = number_format($totalHasilPerkalianBobotKriteriaDanAlternatif[$i], 3, ',', '.');
-                              ?>
-                    
-                              <td><?= $formattedHasilPerkalianBobotKriteriaDanAlternatif[$i][$currentKriteria] ?></td>
-                    
-                            <?php else: ?>
-                    
-                              <td><?= $formattedTotalHasilPerkalianBobotKriteriaDanAlternatif[$i] ?></td>
-                              
-                            <?php endif ?>
-                    
-                          <?php endfor ?>
-                          
-                          </tr>
-                    
-                        <?php endfor ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--/.hasil-nilai-perkalian-bobot-kriteria-dan-alternatif-yang-selesai-dihitung -->
-
-          
-          <!-- Ranking -->
-          <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between mb-3">
-                    <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Ranking</h4>
-                  </div>
-                  <div class="table-responsive">
-                    <table class="table table-striped datatables w-100">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Alternatif</th>
-                          <th>Nilai Akhir</th>
-                          <th>Ranking</th>
-                          <th>Keterangan Lulus</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                        $no = 1;
-                        $kodeAlternatif = array_column($alternatif, 'kode_alternatif');
-                        $nilaiAkhirs    = $totalHasilPerkalianBobotKriteriaDanAlternatif;
-                        $dataRankings   = getRankingAlternatif($kodeAlternatif, $nilaiAkhirs)['data'];
-                        $namaKriterias  = array_map(fn($x) => $x['nama_kriteria'], $kriteria);
-                        $kelulusanSiswa = getKelulusanSiswa($alternatif_nilai_siswa, $namaKriterias)['data'];
-                        ?>
-                    
-                        <?php for ($i = 0; $i < count($dataRankings); $i++): ?>
-                    
-                          <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= $dataRankings[$i]['kode_alternatif'] ?></td>
-                            <td><?= number_Format($dataRankings[$i]['nilai_akhir'], 3, ',', '.') ?></td>
-                            <td><?= $dataRankings[$i]['rank'] ?></td>
-                            <td><?=
-                              strtolower($kelulusanSiswa[$i]['keterangan_kelulusan']) === 'lulus'
-                                ? '<span class="text-success">Lulus</span>'
-                                : '<span class="text-danger">Tidak Lulus</span>'
-                            ?></td>
-                          </tr>
-                          
-                        <?php endfor ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--/.ranking -->
 
           <?php endif ?>
           <!-- End condition from row empty-data above -->
