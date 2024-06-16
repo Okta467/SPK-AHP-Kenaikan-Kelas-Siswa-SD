@@ -139,7 +139,6 @@ else:
                 <div class="card-body">
                   <div class="d-flex justify-content-between mb-3">
                     <h4 class="card-title"><i class="ti-write mr-2"></i>Data Penilaian Alternatif</h4>
-                    <button type="button" class="btn btn-sm btn-info btn-icon-text toggle_modal_tambah">Tambah Data<i class="icon-plus btn-icon-append"></i></button>
                   </div>
                   <p class="card-description">
                     Data yang ditampilkan merupakan <span class="text-danger font-weight-bold">siswa</span> yang data <span class="text-danger font-weight-bold">alternatifnya</span> sudah diinput.
