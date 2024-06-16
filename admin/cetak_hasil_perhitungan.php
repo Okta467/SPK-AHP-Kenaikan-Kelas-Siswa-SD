@@ -34,7 +34,8 @@ else:
   <title>Data Penilaian Alternatif - <?= SITE_NAME ?></title>
 
   <style>
-    .x_panel {    width: 100%;
+    .x_panel {
+      width: 100%;
       padding: 10px 17px;
       display: inline-block;
       background: #fff;
@@ -45,6 +46,7 @@ else:
       opacity: 1;
       transition: all .2s ease;
     }
+    
     .table td {
       font-size: unset;
     }
@@ -327,6 +329,7 @@ $nama_kelas   = $alternatif[0]['nama_kelas'];
 $dari_tahun   = $alternatif[0]['dari_tahun'];
 $sampai_tahun = $alternatif[0]['sampai_tahun'];
 ?>
+
 <h3 class="text-center my-5"><?= "Kenaikan Siswa Kelas {$nama_kelas} Periode {$dari_tahun}/{$sampai_tahun}" ?></h3>
 
 <!-- Ranking -->
@@ -350,7 +353,7 @@ $sampai_tahun = $alternatif[0]['sampai_tahun'];
   
       $kodeAlternatif = array_column($alternatif, 'kode_alternatif');
       $nilaiAkhirs    = $totalHasilPerkalianBobotKriteriaDanAlternatif;
-      $namaSiswa     = array_column($alternatif, 'nama_siswa');
+      $namaSiswa      = array_column($alternatif, 'nama_siswa');
       $nisnSiswa      = array_column($alternatif, 'nisn');
       $jkSiswa        = array_column($alternatif, 'jk');
       $namaKelas      = array_column($alternatif, 'nama_kelas');
