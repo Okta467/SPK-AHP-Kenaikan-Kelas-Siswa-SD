@@ -7,8 +7,12 @@
       "SELECT
         a.nilai_siswa,
         b.kode_alternatif,
+        c.nisn, c.nama_siswa, c.jk,
+        d.nama_kelas, 
         e.nama_kriteria,
-        g.range_nilai
+        g.range_nilai,
+        h.nip, h.nama_guru,
+        i.dari_tahun, i.sampai_tahun
       FROM tbl_penilaian_alternatif AS a
       LEFT JOIN tbl_alternatif AS b
         ON b.id = a.id_alternatif
@@ -22,8 +26,8 @@
         ON f.id = a.id_sub_kriteria
       LEFT JOIN tbl_range_nilai AS g
         ON g.id = f.id_range_nilai
-      LEFT JOIN tbl_kelas AS h
-        ON h.id = c.id_kelas
+      LEFT JOIN tbl_guru AS h
+        ON h.id = d.id_wali_kelas
       LEFT JOIN tbl_tahun_akademik AS i
         ON i.id = a.id_tahun_akademik
       WHERE
@@ -50,6 +54,20 @@
       }
 
       $result[$kode_alternatif][$nama_kriteria] = $range_nilai;
+      
+      // Siswa
+      $result[$kode_alternatif]['nama_siswa'] = $alternatif['nama_siswa'];
+      $result[$kode_alternatif]['nisn']       = $alternatif['nisn'];
+      $result[$kode_alternatif]['jk']         = $alternatif['jk'];
+
+      // Guru atau Wali Kelas
+      $result[$kode_alternatif]['nama_kelas'] = $alternatif['nama_kelas'];
+      $result[$kode_alternatif]['nama_guru']  = $alternatif['nama_guru'];
+      $result[$kode_alternatif]['nip']        = $alternatif['nip'];
+
+      // Tahun akademik
+      $result[$kode_alternatif]['dari_tahun']   = $alternatif['dari_tahun'];
+      $result[$kode_alternatif]['sampai_tahun'] = $alternatif['sampai_tahun'];
     }
 
     $alternatif = array_values($result);
