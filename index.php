@@ -5,6 +5,9 @@
   <?php session_start() ?>
   <?php include 'config/config.php' ?>
   <?php include 'head_login.php' ?>
+  <?php include 'helpers/user_login_checker.php' ?>
+
+  <?php isset($_SESSION['hak_akses']) ? isAlreadyLoggedIn($_SESSION['hak_akses']) : '' ?>
 
   <meta name="Description" content="Halaman Login">
   <title>Login - <?= SITE_NAME ?></title>
