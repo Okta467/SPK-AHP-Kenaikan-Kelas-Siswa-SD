@@ -89,7 +89,7 @@ else:
                   </p>
                   <form action="hasil_perhitungan.php" method="GET">
 
-                    <input type="hidden" name="go" value="penilaian_alternatif">
+                    <input type="hidden" name="go" value="hasil_perhitungan">
                   
                     <div class="form-group row">
 
