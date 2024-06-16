@@ -79,9 +79,9 @@ else :
                         <thead>
                           <tr>
                             <th>#</th>
-                            <th>Pengguna</th>
-                            <th>Nama Pengguna</th>
+                            <th>Foto</th>
                             <th>Username</th>
+                            <th>Pemilik</th>
                             <th>Hak Akses</th>
                             <th>Jabatan</th>
                             <th>Aksi</th>
