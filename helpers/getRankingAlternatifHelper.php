@@ -5,9 +5,24 @@
      * 
      * @param null|array<mixed> $kodeAlternatif
      * @param null|array<int, float> $nilaiAkhir
+     * @param null|array<string> $namaSiswa
+     * @param null|array<string> $nisnSiswa
+     * @param null|array<string> $jkSiswa
+     * @param null|array<string> $namaKelas
+     * @param null|array<string> $namaWaliKelas
+     * @param null|array<string> $nipWaliKelas
      * @return array contains alternative kode, nilai_akhir, rank
      */
-    function getRankingAlternatif($kodeAlternatif = null, $nilaiAkhir = null) {
+    function getRankingAlternatif(
+        $kodeAlternatif = null,
+        $nilaiAkhir = null,
+        $namaSiswa = null,
+        $nisnSiswa = null,
+        $jkSiswa = null,
+        $namaKelas = null,
+        $namaWaliKelas = null,
+        $nipWaliKelas = null,
+    ) {
         $jmlKodeAlternatif = count($kodeAlternatif);
         $jmlNilaiAkhir = count($nilaiAkhir);
         
@@ -31,7 +46,13 @@
         for ($i = 0; $i < $jmlNilaiAkhir; $i++) {
             $data['data'][$i] = [
                 'kode_alternatif' => $kodeAlternatif[$i],
-                'nilai_akhir' => $nilaiAkhir[$i]
+                'nilai_akhir'     => $nilaiAkhir[$i],
+                'nama_siswa'      => $namaSiswa[$i],
+                'nisn_siswa'      => $nisnSiswa[$i],
+                'jk_siswa'        => $jkSiswa[$i],
+                'nama_kelas'      => $namaKelas[$i],
+                'nama_wali_kelas' => $namaWaliKelas[$i],
+                'nip_wali_kelas'  => $nipWaliKelas[$i]
             ];
         }
 
