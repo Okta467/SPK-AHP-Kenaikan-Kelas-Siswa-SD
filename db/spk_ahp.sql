@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2024 at 01:13 AM
+-- Generation Time: Jun 17, 2024 at 03:17 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -322,7 +322,7 @@ CREATE TABLE `tbl_pengguna` (
 INSERT INTO `tbl_pengguna` (`id`, `id_guru`, `id_siswa`, `username`, `password`, `hak_akses`, `created_at`, `last_login`) VALUES
 (9, NULL, NULL, 'admin', '$2y$10$VSwsaud3aHkzE3VzMfuGCO9YizH7A7wVnx7Xfi9kUDiJdhDY53Msy', 'admin', '2024-06-10 14:42:24', NULL),
 (10, 7, NULL, '1234567890123456', '$2y$10$BMpVZgOC.9kO5ep4qg1NgueD88nDbYogdY.gbL54KpgvDc77F8nH.', 'guru', '2024-06-10 15:46:11', NULL),
-(12, 1, NULL, '196506121990022003', '$2y$10$2sh7PaSKyWz6lNjKHKGyrugwv9trVbvNKA62PcHel6dhrTPhrOdQm', 'kepala_sekolah', '2024-06-10 17:32:47', NULL),
+(12, 1, NULL, '196506121990022003', '$2y$10$yl3YmNGYbvKdPqFUXQxT..GSeCl03bwEdmDzJnJDS9q6utP2tab6q', 'kepala_sekolah', '2024-06-10 17:32:47', NULL),
 (13, NULL, 1, '9991814928', '$2y$10$wwsMqfqamE.svhDczRjODe2TL7F6JCkGcqqqF3z41tkRnec.ZNxgu', 'siswa', '2024-06-10 17:33:41', NULL),
 (14, 8, NULL, '9999999999888777', '$2y$10$V18sgx5Mq5OrMOTiDgDLIe5onbpmJAj4pgoweH7pECFYFu1C5wtEG', 'guru', '2024-06-10 18:02:34', NULL),
 (15, NULL, 1, '9991814922', '$2y$10$ClQuypSr8X61xoizKS30j.j0tNcNWzoxTUWBoK.CON4/qVmOivb/.', 'siswa', '2024-06-10 18:47:43', NULL),
@@ -377,7 +377,15 @@ INSERT INTO `tbl_penilaian_alternatif` (`id`, `id_alternatif`, `id_kriteria`, `i
 (71, 8, 2, 3, 3, '75.00', '2024-06-16 22:43:57', NULL),
 (72, 8, 3, 4, 3, '90.00', '2024-06-16 22:43:57', NULL),
 (73, 8, 4, 4, 3, '85.00', '2024-06-16 22:43:57', NULL),
-(74, 8, 5, 4, 3, '88.00', '2024-06-16 22:43:57', NULL);
+(74, 8, 5, 4, 3, '88.00', '2024-06-16 22:43:57', NULL),
+(75, 8, 1, 3, 2, '77.00', '2024-06-17 01:00:07', NULL),
+(76, 8, 2, 4, 2, '89.00', '2024-06-17 01:00:07', NULL),
+(77, 8, 3, 2, 2, '56.00', '2024-06-17 01:00:07', NULL),
+(78, 8, 4, 1, 2, '23.00', '2024-06-17 01:00:07', NULL),
+(79, 6, 1, 5, 2, '99.00', '2024-06-17 01:07:02', NULL),
+(80, 6, 2, 2, 2, '52.00', '2024-06-17 01:07:02', NULL),
+(81, 6, 3, 2, 2, '56.00', '2024-06-17 01:07:02', NULL),
+(82, 6, 4, 3, 2, '67.00', '2024-06-17 01:07:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -711,7 +719,7 @@ ALTER TABLE `tbl_pengguna`
 -- AUTO_INCREMENT for table `tbl_penilaian_alternatif`
 --
 ALTER TABLE `tbl_penilaian_alternatif`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `tbl_range_nilai`
