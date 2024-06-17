@@ -59,9 +59,9 @@ else:
   
   Kelas dan Tahun Akademik tidak dipilih!
 
-<?php elseif ($jmlAlternatif === 0 || $jmlKriteria === 0): ?>
+<?php elseif ($jmlAlternatif < 2 || $jmlKriteria < 2): ?>
 
-  Data alternatif atau kriteria tidak ada!
+  Data alternatif atau kriteria tidak ada atau alternatif kurang dari 2!
 
 <?php else: ?>
 
@@ -277,7 +277,7 @@ $jmlBarisNilaiPerkalianBobotDanAlternatif = $jmlAlternatif + $barisTambahanPerka
       <?php
       $currentKriteria = $kriteria[$j]['nama_kriteria'];
 
-      $bobotKriteria[$i][$currentKriteria] = $rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i];
+      @$bobotKriteria[$i][$currentKriteria] = $rataHasilMatriksPerbandinganKriteria[$currentKriteria][$i];
 
       $formattedBobotKriteria[$i][$currentKriteria] = number_format($bobotKriteria[$i][$currentKriteria], 3, ',', '.');
       ?>

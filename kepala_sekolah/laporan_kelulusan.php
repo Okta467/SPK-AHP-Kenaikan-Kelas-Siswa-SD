@@ -155,8 +155,8 @@ else:
           if (
             !$id_kelas_filter
             && !$id_tahun_akademik_filter
-            || $jmlAlternatif === 0
-            || $jmlKriteria === 0
+            || $jmlAlternatif < 2
+            || $jmlKriteria < 2
           ):
           ?>
             
@@ -175,7 +175,7 @@ else:
 
                     <?php elseif ($jmlAlternatif === 0 || $jmlKriteria === 0): ?>
 
-                      Data <span class="text-danger font-weight-bold">alternatif</span> atau <span class="text-danger font-weight-bold">kriteria</span> tidak ada.
+                      Data <span class="text-danger font-weight-bold">alternatif</span> atau <span class="text-danger font-weight-bold">kriteria</span> tidak ada atau alternatif <span class="text-danger font-weight-bold">kurang dari 2</span>.
 
                     <?php endif ?>
                   </p>

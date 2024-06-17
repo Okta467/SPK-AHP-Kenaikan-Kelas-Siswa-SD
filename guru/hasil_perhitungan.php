@@ -139,8 +139,8 @@ else:
                       <div class="col-sm-4 d-flex align-items-end mt-3">
                         <button type="submit" class="btn btn-md btn-dark btn-icon-text">Filter Data</button>
                         
-                        <?php $url_cetak_kelulusan = "cetak_laporan_kelulusan.php" ?>  
-                        <button type="button" class="btn btn-md btn-info btn-icon-text toggle_cetak_laporan_kelulusan ml-2" onclick="printExternal(`<?= $url_cetak_kelulusan ?>`, `<?= $id_kelas_filter ?>`, `<?= $id_tahun_akademik_filter ?>`)"><i class="icon-printer mr-2"></i>Cetak Kelulusan</button>
+                        <?php $url_cetak_hasil_perhitungan = "cetak_hasil_perhitungan.php" ?>  
+                        <button type="button" class="btn btn-md btn-info btn-icon-text ml-2" onclick="printExternal(`<?= $url_cetak_hasil_perhitungan ?>`, `<?= $id_kelas_filter ?>`, `<?= $id_tahun_akademik_filter ?>`)"><i class="icon-printer mr-2"></i>Cetak Kelulusan</button>
                       </div>
                         
                     </div>
@@ -155,8 +155,8 @@ else:
           if (
             !$id_kelas_filter
             && !$id_tahun_akademik_filter
-            || $jmlAlternatif === 0
-            || $jmlKriteria === 0
+            || $jmlAlternatif < 2
+            || $jmlKriteria < 2
           ):
           ?>
             
@@ -175,7 +175,7 @@ else:
 
                     <?php elseif ($jmlAlternatif === 0 || $jmlKriteria === 0): ?>
 
-                      Data <span class="text-danger font-weight-bold">alternatif</span> atau <span class="text-danger font-weight-bold">kriteria</span> tidak ada.
+                      Data <span class="text-danger font-weight-bold">alternatif</span> atau <span class="text-danger font-weight-bold">kriteria</span> tidak ada atau alternatif <span class="text-danger font-weight-bold">kurang dari 2</span>.
 
                     <?php endif ?>
                   </p>
