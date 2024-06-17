@@ -90,17 +90,16 @@ else:
                   <h4 class="card-title">Tindakan</h4>
                   <p class="card-description">Tindakan yang dapat dilakukan sebagai <span class="text-danger font-weight-bold">Guru</span>:</p>
                   <ul>
-                    <li>Mengelola <a href="pengguna.php?go=pengguna" class="font-weight-bold">Pengguna</a></li>
-                    <li>Mengelola <a href="siswa.php?go=siswa" class="font-weight-bold">Siswa</a> dan <a class="font-weight-bold">Guru</a></li>
-                    <li>Mengelola <a href="kelas.php?go=kelas" class="font-weight-bold">Kelas</a></li>
-                    <li>Mengelola <a href="jabatan.php?go=jabatan" class="font-weight-bold">Jabatan</a></li>
-                    <li>Mengelola <a href="pangkat_golongan.php?go=pangkat_golongan" class="font-weight-bold">Pangkat/Golongan</a></li>
-                    <li>Mengelola <a href="pendidikan.php?go=pendidikan" class="font-weight-bold">Pendidikan</a> dan <a href="jurusan_pendidikan.php?go=jurusan_pendidikan" class="font-weight-bold">Jurusan</a></li>
+                    <li>Mengelola <a href="profil.php?go=profil" class="font-weight-bold">Biodata Diri</a></li>
+                    <li>Mengelola <a href="siswa.php?go=siswa" class="font-weight-bold">Siswa</a> dan <a href="alternatif?go=alternatif" class="font-weight-bold">Alternatif</a></li>
                     <li>Mengelola data <span class="font-weight-bold">SPK</span>, yaitu:
                       <ol>
                         <li><a href="alternatif.php?go=alternatif" class="font-weight-bold">Alternatif</a></li>
                         <li><a href="kriteria.php?go=kriteria" class="font-weight-bold">Kriteria</a> dan <a href="sub_kriteria.php?go=sub_kriteria" class="font-weight-bold">Sub Kriteria</a></li>
-                      </ol>
+                        <li><a href="range_nilai.php?go=range_nilai" class="font-weight-bold">Range Nilai</a></li>
+                        <li><a href="penilaian_alternatif.php?go=penilaian_alternatif" class="font-weight-bold">Penilaian Alternatif (Siswa)</a></li>
+                        <li><a href="hasil_perhitungan.php?go=hasil_perhitungan" class="font-weight-bold">Hasil Perhitungan AHP (Kelulusan)</a></li>
+                        </ol>
                     </li>
                   </ul>
                 </div>

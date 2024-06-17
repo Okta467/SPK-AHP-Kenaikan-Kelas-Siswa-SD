@@ -100,6 +100,7 @@ else:
                       <ol>
                         <li><a href="alternatif.php?go=alternatif" class="font-weight-bold">Alternatif</a></li>
                         <li><a href="kriteria.php?go=kriteria" class="font-weight-bold">Kriteria</a> dan <a href="sub_kriteria.php?go=sub_kriteria" class="font-weight-bold">Sub Kriteria</a></li>
+                        <li><a href="range_nilai.php?go=range_nilai" class="font-weight-bold">Range Nilai</a></li>
                       </ol>
                     </li>
                   </ul>
