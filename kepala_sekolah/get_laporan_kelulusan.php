@@ -107,18 +107,25 @@
         ON c.id = b.id_tingkat_kepentingan
       WHERE a.id_tahun_akademik = {$id_tahun_akademik_filter}
       GROUP BY a.id_kriteria");
-      
-    $query_all_kriteria = mysqli_query($connection, "SELECT *, id AS id_kriteria FROM tbl_kriteria WHERE status_aktif='1'");
+    
+    $query_all_active_kriteria = mysqli_query($connection, 
+      "SELECT 
+        b.id AS id_kriteria, b.kode_kriteria, b.nama_kriteria,
+        c.id AS id_tingkat_kepentingan, c.nilai_kepentingan
+      FROM tbl_kriteria AS b
+      LEFT JOIN tbl_tingkat_kepentingan AS c
+        ON c.id = b.id_tingkat_kepentingan
+      WHERE status_aktif='1'");
 
     $query_kriteria = !$query_existing_kriteria_by_tahun_akademik->num_rows
-      ? $query_all_kriteria
+      ? $query_all_active_kriteria
       : $query_existing_kriteria_by_tahun_akademik;
 
     $kriteria = mysqli_fetch_all($query_kriteria, MYSQLI_ASSOC);
 
     $kriteria = array_map(fn($arr) => [
       'nama_kriteria'     => $arr['nama_kriteria'], 
-      'nilai_kepentingan' => $arr['nilai_kepentingan']
+      'nilai_kepentingan' => $arr['nilai_kepentingan'] ?? null
     ], $kriteria);
 
 
