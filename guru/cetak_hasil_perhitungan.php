@@ -59,6 +59,10 @@ else:
   
   Kelas dan Tahun Akademik tidak dipilih!
 
+<?php elseif ($jmlAlternatif === 0 || $jmlKriteria === 0): ?>
+
+  Data alternatif atau kriteria tidak ada!
+
 <?php else: ?>
 
 
