@@ -51,20 +51,6 @@
       </a>
     </li>
     
-    <li class="nav-item <?php if ($current_page==='penilaian_alternatif') echo 'active' ?>">
-      <a class="nav-link" href="penilaian_alternatif.php?go=penilaian_alternatif">
-        <i class="ti-write menu-icon"></i>
-        <span class="menu-title">Nilai</span>
-      </a>
-    </li>
-    
-    <li class="nav-item <?php if ($current_page==='hasil_perhitungan') echo 'active' ?>">
-      <a class="nav-link" href="hasil_perhitungan.php?go=hasil_perhitungan">
-        <i class="ti-bar-chart menu-icon"></i>
-        <span class="menu-title">Hasil Perhitungan</span>
-      </a>
-    </li>
-    
     <li class="nav-item <?php if ($current_page==='jabatan') echo 'active' ?>">
       <a class="nav-link" href="jabatan.php?go=jabatan">
         <i class="icon-briefcase menu-icon"></i>
