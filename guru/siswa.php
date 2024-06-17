@@ -102,7 +102,7 @@ else:
                           ON a.id = f.id_siswa
                         WHERE b.id_wali_kelas = {$_SESSION['id_guru']}
                         GROUP BY a.id
-                        ORDER BY a.id DESC");
+                        ORDER BY b.nama_kelas ASC, a.nama_siswa ASC");
 
                       while ($siswa = mysqli_fetch_assoc($query_siswa)): ?>
 

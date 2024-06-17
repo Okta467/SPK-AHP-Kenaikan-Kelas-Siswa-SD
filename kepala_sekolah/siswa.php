@@ -101,7 +101,7 @@ else:
                         LEFT JOIN tbl_pengguna AS f
                           ON a.id = f.id_siswa
                         GROUP BY a.id
-                      ORDER BY a.id_kelas ASC, a.nama_siswa ASC");
+                      ORDER BY b.nama_kelas ASC, a.nama_siswa ASC");
 
                       while ($siswa = mysqli_fetch_assoc($query_siswa)): ?>
 
