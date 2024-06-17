@@ -95,10 +95,19 @@ else:
 
                       <div class="col-sm-2">
                         <label for="kelas_filter">Kelas</label>
-                        <select name="id_kelas_filter" class="form-control form-control-sm select2 kelas_filter" id="kelas_filter" required style="width: 100%">
+                        <select name="id_kelas_filter" class="form-control form-control-sm select2 id_kelas_filter" id="id_kelas_filter" required style="width: 100%">
                           <option value="">-- Pilih --</option>
                           <?php
-                          $query_kelas = mysqli_query($connection, "SELECT id, nama_kelas FROM tbl_kelas WHERE id_wali_kelas = {$_SESSION['id_guru']} ORDER BY nama_kelas ASC");
+                          $query_kelas = mysqli_query($connection, 
+                            "SELECT d.id, d.nama_kelas
+                            FROM tbl_penilaian_alternatif AS a
+                            JOIN tbl_alternatif AS b
+                              ON b.id = a.id_alternatif
+                            JOIN tbl_siswa AS c
+                              ON c.id = b.id_siswa
+                            JOIN tbl_kelas AS d
+                              ON d.id = c.id_kelas
+                            GROUP BY c.id_kelas ASC");
 
                           while ($kelas = mysqli_fetch_assoc($query_kelas)):
                             $select_kelas_filter = ($id_kelas_filter === $kelas['id']) ? 'selected' : '';
@@ -129,9 +138,9 @@ else:
                       
                       <div class="col-sm-4 d-flex align-items-end mt-3">
                         <button type="submit" class="btn btn-md btn-dark btn-icon-text">Filter Data</button>
-
-                        <?php $url_cetak_kelulusan = "cetak_hasil_perhitungan.php?id_kelas_filter={$id_kelas_filter}&id_tahun_akademik_filter={$id_tahun_akademik_filter}" ?>  
-                        <button type="button" class="btn btn-md btn-info btn-icon-text toggle_cetak_hasil_perhitungan ml-2" onclick="printExternal(`<?= $url_cetak_kelulusan ?>`)"><i class="icon-printer mr-2"></i>Cetak Kelulusan</button>
+                        
+                        <?php $url_cetak_kelulusan = "cetak_laporan_kelulusan.php" ?>  
+                        <button type="button" class="btn btn-md btn-info btn-icon-text toggle_cetak_laporan_kelulusan ml-2" onclick="printExternal(`<?= $url_cetak_kelulusan ?>`, `<?= $id_kelas_filter ?>`, `<?= $id_tahun_akademik_filter ?>`)"><i class="icon-printer mr-2"></i>Cetak Kelulusan</button>
                       </div>
                         
                     </div>
@@ -142,8 +151,15 @@ else:
           </div>
           <!--/.tools-hasil-perhitungan -->
 
-          <?php if (!$id_kelas_filter && !$id_tahun_akademik_filter): ?>
-
+          <?php
+          if (
+            !$id_kelas_filter
+            && !$id_tahun_akademik_filter
+            || $jmlAlternatif === 0
+            || $jmlKriteria === 0
+          ):
+          ?>
+            
           <!-- EMPTY DATA -->
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
@@ -152,7 +168,17 @@ else:
                   <div class="d-flex justify-content-between mb-3">
                     <h4 class="card-title"><i class="ti-pencil-alt mr-2"></i>Data Hasil Perhitungan</h4>
                   </div>
-                  <p class="card-description">Pilih <span class="text-danger font-weight-bold">kelas</span> dan <span class="text-danger font-weight-bold">tahun akademik</span> terlebih dahulu!</p>
+                  <p class="card-description">
+                    <?php if (!$id_kelas_filter && !$id_tahun_akademik_filter): ?>
+
+                      Pilih <span class="text-danger font-weight-bold">kelas</span> dan <span class="text-danger font-weight-bold">tahun akademik</span> terlebih dahulu!
+
+                    <?php elseif ($jmlAlternatif === 0 || $jmlKriteria === 0): ?>
+
+                      Data <span class="text-danger font-weight-bold">alternatif</span> atau <span class="text-danger font-weight-bold">kriteria</span> tidak ada.
+
+                    <?php endif ?>
+                  </p>
                   <div class="table-responsive">
                     <table class="table table-striped datatables">
                       <thead>
@@ -1153,7 +1179,19 @@ else:
 
   <!-- PAGE SCRIPT -->
   <script>
-    function printExternal(url) {
+    function printExternal(url, idKelas, idTahunAkademik) {
+      if (!idKelas) {
+        idKelas = document.querySelector('.id_kelas_filter').value;
+      }
+
+      if (!idTahunAkademik) {
+        idTahunAkademik = document.querySelector('.id_tahun_akademik_filter').value;
+      }
+      
+      if (idKelas && idTahunAkademik) {
+        url += `?id_kelas_filter=${idKelas}&id_tahun_akademik_filter=${idTahunAkademik}`;
+      }
+
       // Get the screen width and height
       var screenWidth = screen.width;
       var screenHeight = screen.height;
