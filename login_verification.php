@@ -40,6 +40,13 @@
 		return;
 	}
 
+	// redirect ke halaman login dengan error jika hak akses siswa
+	if ($user['hak_akses'] === 'siswa') {
+		$_SESSION['msg'] = 'Siswa tidak memiliki halamannya sendiri!';
+		echo "<meta http-equiv='refresh' content='0;index.php'>";
+		return;
+	}
+
 	// set sesi user sekarang
 	$_SESSION['id_pengguna'] = $user['id'];
 	$_SESSION['id_guru']     = $user['id_guru'];
@@ -63,7 +70,7 @@
 			break;
 		
 		default:
-			header("location:index.php");
+			header("location:logout.php");
 			break;
 	}
 ?>
