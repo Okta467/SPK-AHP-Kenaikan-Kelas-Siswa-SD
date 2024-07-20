@@ -14,6 +14,7 @@ else:
   include_once '../helpers/getTValueHelper.php';
   include_once '../helpers/getRankingAlternatifHelper.php';
   include_once '../helpers/getKelulusanSiswaHelper.php';
+  include_once '../helpers/getMergedRankingAndKelulusanAlternatifHelper.php';
 
   $id_kelas_filter          = $_GET['id_kelas_filter'] ?? null;
   $id_tahun_akademik_filter = $_GET['id_tahun_akademik_filter'] ?? null;
@@ -1114,22 +1115,23 @@ else:
                                     <tbody>
                                       <?php
                                       $no = 1;
-                                      $kodeAlternatif = array_column($alternatif, 'kode_alternatif');
-                                      $nilaiAkhirs    = $totalHasilPerkalianBobotKriteriaDanAlternatif;
-                                      $dataRankings   = getRankingAlternatif($kodeAlternatif, $nilaiAkhirs)['data'];
-                                      $namaKriterias  = array_map(fn($x) => $x['nama_kriteria'], $kriteria);
-                                      $kelulusanSiswa = getKelulusanSiswa($alternatif_nilai_siswa, $namaKriterias)['data'];
+                                      $kodeAlternatif                = array_column($alternatif, 'kode_alternatif');
+                                      $nilaiAkhirs                   = $totalHasilPerkalianBobotKriteriaDanAlternatif;
+                                      $alternatifWithRankings        = getRankingAlternatif($kodeAlternatif, $nilaiAkhirs)['data'];
+                                      $namaKriterias                 = array_map(fn($x) => $x['nama_kriteria'], $kriteria);
+                                      $alternatifWithKelulusans      = getKelulusanSiswa($alternatif_nilai_siswa, $namaKriterias)['data'];
+                                      $alternatifRankingAndKelulusan = getMergedRankingAndKelulusanAlternatif('kode_alternatif', $alternatifWithRankings, $alternatifWithKelulusans)['data'];
                                       ?>
                                   
-                                      <?php for ($i = 0; $i < count($dataRankings); $i++): ?>
+                                      <?php for ($i = 0; $i < count($alternatifRankingAndKelulusan); $i++): ?>
                                   
                                         <tr>
                                           <td><?= $no++ ?></td>
-                                          <td><?= $dataRankings[$i]['kode_alternatif'] ?></td>
-                                          <td><?= number_Format($dataRankings[$i]['nilai_akhir'], 3, ',', '.') ?></td>
-                                          <td><?= $dataRankings[$i]['rank'] ?></td>
+                                          <td><?= $alternatifRankingAndKelulusan[$i]['kode_alternatif'] ?></td>
+                                          <td><?= number_Format($alternatifRankingAndKelulusan[$i]['nilai_akhir'], 3, ',', '.') ?></td>
+                                          <td><?= $alternatifRankingAndKelulusan[$i]['rank'] ?></td>
                                           <td><?=
-                                            strtolower($kelulusanSiswa[$i]['keterangan_kelulusan']) === 'lulus'
+                                            strtolower($alternatifRankingAndKelulusan[$i]['keterangan_kelulusan']) === 'lulus'
                                               ? '<span class="font-weight-bold text-success">Lulus</span>'
                                               : '<span class="font-weight-bold text-danger">Tidak Lulus</span>'
                                           ?></td>
@@ -1158,7 +1160,6 @@ else:
 
           <?php endif ?>
           <!-- End condition from row empty-data above -->
-
         </div>
         <!-- content-wrapper ends -->
 
