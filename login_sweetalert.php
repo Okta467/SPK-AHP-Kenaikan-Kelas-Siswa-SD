@@ -45,6 +45,21 @@
     });
   </script>
 
+<?php elseif ($_SESSION['msg'] !== ''): ?>
+
+  <script>
+    swal({
+      title: "Error!",
+      text: "<?= $_SESSION['msg'] ?>",
+      icon: "error",
+      timer: 3000,
+      button: {
+        text: "OK",
+        className: "bg-danger",
+      },
+    });
+  </script>
+
 <?php endif ?>
 
 <?php unset($_SESSION['msg']) ?>
