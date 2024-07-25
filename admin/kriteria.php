@@ -377,7 +377,7 @@ else:
                 i++, 
                 data[key]['kode_sub_kriteria'], 
                 data[key]['nama_sub_kriteria'], 
-                `${data[key]['batas_bawah']} - ${data[key]['batas_bawah']}`,
+                `${data[key]['batas_bawah']} - ${data[key]['batas_atas']}`,
                 data[key]['range_nilai']
               ]);
             }
