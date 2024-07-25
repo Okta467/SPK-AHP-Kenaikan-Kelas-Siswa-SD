@@ -14,6 +14,7 @@ else:
   include_once '../helpers/getTValueHelper.php';
   include_once '../helpers/getRankingAlternatifHelper.php';
   include_once '../helpers/getKelulusanSiswaHelper.php';
+  include_once '../helpers/getMergedRankingAndKelulusanAlternatifHelper.php';
 
   $id_kelas_filter          = $_GET['id_kelas_filter'] ?? null;
   $id_tahun_akademik_filter = $_GET['id_tahun_akademik_filter'] ?? null;
@@ -482,7 +483,7 @@ else:
                         $namaWaliKelas  = array_column($alternatif, 'nama_guru');
                         $nipWaliKelas   = array_column($alternatif, 'nip');
                     
-                        $dataRankings   = getRankingAlternatif(
+                        $alternatifWithRankings = getRankingAlternatif(
                           $kodeAlternatif,
                           $nilaiAkhirs,
                           $namaSiswa,
@@ -492,22 +493,23 @@ else:
                           $namaWaliKelas,
                           $nipWaliKelas)['data'];
                     
-                        $namaKriterias  = array_map(fn($x) => $x['nama_kriteria'], $kriteria);
-                        $kelulusanSiswa = getKelulusanSiswa($alternatif_nilai_siswa, $namaKriterias)['data'];
+                        $namaKriterias = array_map(fn($x) => $x['nama_kriteria'], $kriteria);
+                        $alternatifWithKelulusans = getKelulusanSiswa($alternatif_nilai_siswa, $namaKriterias)['data'];
+                        $alternatifRankingAndKelulusan = getMergedRankingAndKelulusanAlternatif('kode_alternatif', $alternatifWithRankings, $alternatifWithKelulusans)['data'];
                         ?>
-                    
-                        <?php for ($i = 0; $i < count($dataRankings); $i++): ?>
+  
+                        <?php for ($i = 0; $i < count($alternatifRankingAndKelulusan); $i++): ?>
                     
                           <tr>
                             <td class="text-center"><?= $no++ ?></td>
-                            <td class="text-center"><?= $dataRankings[$i]['kode_alternatif'] ?></td>
-                            <td class="text-center"><?= $dataRankings[$i]['nisn_siswa'] ?></td>
-                            <td><?= htmlspecialchars($dataRankings[$i]['nama_siswa']) ?></td>
-                            <td class="text-center"><?= $dataRankings[$i]['nama_kelas'] ?></td>
-                            <td><?= htmlspecialchars($dataRankings[$i]['nama_wali_kelas']) . "<br><small class='text-muted'>({$dataRankings[$i]['nip_wali_kelas']})</small>" ?></td>
-                            <td class="text-center"><?= $dataRankings[$i]['rank'] ?></td>
+                            <td class="text-center"><?= $alternatifRankingAndKelulusan[$i]['kode_alternatif'] ?></td>
+                            <td class="text-center"><?= $alternatifRankingAndKelulusan[$i]['nisn_siswa'] ?></td>
+                            <td><?= htmlspecialchars($alternatifRankingAndKelulusan[$i]['nama_siswa']) ?></td>
+                            <td class="text-center"><?= $alternatifRankingAndKelulusan[$i]['nama_kelas'] ?></td>
+                            <td><?= htmlspecialchars($alternatifRankingAndKelulusan[$i]['nama_wali_kelas']) . "<br><small class='text-muted'>({$alternatifRankingAndKelulusan[$i]['nip_wali_kelas']})</small>" ?></td>
+                            <td class="text-center"><?= $alternatifRankingAndKelulusan[$i]['rank'] ?></td>
                             <td class="text-center"><?=
-                              strtolower($kelulusanSiswa[$i]['keterangan_kelulusan']) === 'lulus'
+                              strtolower($alternatifRankingAndKelulusan[$i]['keterangan_kelulusan']) === 'lulus'
                                 ? '<span class="font-weight-bold text-success">Lulus</span>'
                                 : '<span class="font-weight-bold text-danger">Tidak Lulus</span>'
                             ?></td>
